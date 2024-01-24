@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "282073103436",
+    "project_id": "rifamas-8ab33",
+    "storage_bucket": "rifamas-8ab33.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:282073103436:android:0af5cbf24a95cc797288e9",
+        "android_client_info": {
+          "package_name": "com.rifamas.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbwyNuDW6Iuizehhl-LTpgw8yDTXhzI-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
