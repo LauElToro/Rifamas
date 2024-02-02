@@ -9,7 +9,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'login_page_model.dart';
 export 'login_page_model.dart';
-
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter/material.dart';
 class LoginPageWidget extends StatefulWidget {
   const LoginPageWidget({Key? key}) : super(key: key);
 
@@ -361,6 +363,38 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             ],
                           ),
                         ),
+                        Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [Padding(
+  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceAround, // Ajusta la alineación según tus necesidades
+    children: [
+      GestureDetector(
+        onTap: () async {
+          await _model.signInWithGoogle();
+        },
+        child: Image.asset(
+          'assets/redes/google.png', // Reemplaza esto con la ruta correcta de tu imagen
+          width: 50, // Ajusta el ancho según tus necesidades
+          height: 50, // Ajusta la altura según tus necesidades
+        ),
+      ),
+      GestureDetector(
+        onTap: () async {
+          await _model.signInWithFacebook();
+        },
+        child: Image.asset(
+          'assets/redes/facebook.png', // Reemplaza esto con la ruta correcta de tu imagen
+          width: 50, // Ajusta el ancho según tus necesidades
+          height: 50, // Ajusta la altura según tus necesidades
+        ),
+      ),
+    ],
+  ),
+),
+  ],
+),
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,

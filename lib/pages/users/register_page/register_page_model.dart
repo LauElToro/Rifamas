@@ -8,7 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 class RegisterPageModel extends FFModel<RegisterPageWidget> {
   ///  Local state fields for this page.
 
@@ -78,5 +80,62 @@ class RegisterPageModel extends FFModel<RegisterPageWidget> {
 
   /// Action blocks are added here.
 
-  /// Additional helper methods are added here.
+  Future<void> registerWithGoogle() async {
+    try {
+      final UserCredential? userCredential = await _registerWithGoogle();
+
+      if (userCredential != null) {
+        print('Usuario registrado con Google con éxito');
+        // Puedes realizar acciones adicionales si es necesario
+      } else {
+        print('Error en el registro con Google');
+      }
+    } catch (e) {
+      print('Error durante el registro con Google: $e');
+    }
+  }
+
+  Future<void> registerWithFacebook() async {
+    try {
+      final UserCredential? userCredential = await _registerWithFacebook();
+
+      if (userCredential != null) {
+        print('Usuario registrado con Facebook con éxito');
+        // Puedes realizar acciones adicionales si es necesario
+      } else {
+        print('Error en el registro con Facebook');
+      }
+    } catch (e) {
+      print('Error durante el registro con Facebook: $e');
+    }
+  }
+
+  Future<UserCredential?> _registerWithGoogle() async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    if (googleUser == null) {
+      return null;
+    }
+
+    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
+  Future<UserCredential?> _registerWithFacebook() async {
+    final LoginResult loginResult = await FacebookAuth.instance.login();
+
+    if (loginResult.status == LoginStatus.success) {
+      final AccessToken accessToken = loginResult.accessToken!;
+      final AuthCredential credential = FacebookAuthProvider.credential(accessToken.token);
+
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    } else {
+      return null;
+    }
+  }
 }

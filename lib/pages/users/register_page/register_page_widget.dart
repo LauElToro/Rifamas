@@ -546,6 +546,40 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                                   ),
                                 ),
                                 Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    Padding(
+      padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          GestureDetector(
+            onTap: () async {
+              await _model.registerWithGoogle();
+            },
+            child: Image.asset(
+              'assets/redes/google.png',
+              width: 50,
+              height: 35,
+            ),
+          ),
+          GestureDetector(
+            onTap: () async {
+              await _model.registerWithFacebook();
+            },
+            child: Image.asset(
+              'assets/redes/facebook.png',
+              width: 50,
+              height: 35,
+            ),
+          ),
+        ],
+      ),
+    ),
+  ],
+),
+
+                                Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
