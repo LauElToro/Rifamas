@@ -54,7 +54,8 @@ class ApiCallResponse {
   final int statusCode;
   final http.Response? response;
   // Whether we received a 2xx status (which generally marks success).
-  bool get succeeded => statusCode >= 200 && statusCode < 300;
+  // bool get succeeded => statusCode >= 200 && statusCode < 300;
+  bool get succeeded => statusCode == 200;
   String getHeader(String headerName) => headers[headerName] ?? '';
   // Return the raw body from the response, or if this came from a cloud call
   // and the body is not a string, then the json encoded body.

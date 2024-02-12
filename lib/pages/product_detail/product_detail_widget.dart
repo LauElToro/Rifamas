@@ -1013,73 +1013,77 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget>
                                             product_id:
                                                 widget.idProduct.toString()),
                                         builder: (context, snapshot) {
-                                          final ticketsAlt = snapshot.data!;
-                                          var tickets = getJsonField(
-                                            ticketsAlt.jsonBody,
-                                            r'''$''',
-                                          );
-                                          if (getJsonField(
-                                                ticketsAlt.jsonBody,
-                                                r'''$.status''',
-                                              ) ==
-                                              "success") {
-                                            tickets = [];
-                                          }
-                                          /*
+                                          if (snapshot.hasData) {
+                                            final ticketsAlt = snapshot.data!;
+                                            var tickets = getJsonField(
+                                              ticketsAlt.jsonBody,
+                                              r'''$''',
+                                            );
+                                            if (getJsonField(
+                                                  ticketsAlt.jsonBody,
+                                                  r'''$.status''',
+                                                ) ==
+                                                "success") {
+                                              tickets = [];
+                                            }
+                                            /*
                                           final tickets = FFAppState()
                                               .ticketsSelected
                                               .toList();
                                               */
-                                          return GridView.builder(
-                                            padding: EdgeInsets.zero,
-                                            gridDelegate:
-                                                SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 7,
-                                              crossAxisSpacing: 10.0,
-                                              mainAxisSpacing: 10.0,
-                                              childAspectRatio: 1.0,
-                                            ),
-                                            scrollDirection: Axis.vertical,
-                                            itemCount: tickets.length,
-                                            itemBuilder:
-                                                (context, ticketsIndex) {
-                                              final ticketsItem =
-                                                  tickets[ticketsIndex];
-                                              return Container(
-                                                width: 120.0,
-                                                height: 50.0,
-                                                decoration: BoxDecoration(
-                                                  color: FFTheme.of(context)
-                                                      .secondaryBackground,
-                                                  image: DecorationImage(
-                                                    fit: BoxFit.fitWidth,
-                                                    image: Image.asset(
-                                                      'assets/images/LOGO-RIFAMAS-papeleta-small.webp',
-                                                    ).image,
+                                            return GridView.builder(
+                                              padding: EdgeInsets.zero,
+                                              gridDelegate:
+                                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                                crossAxisCount: 7,
+                                                crossAxisSpacing: 10.0,
+                                                mainAxisSpacing: 10.0,
+                                                childAspectRatio: 1.0,
+                                              ),
+                                              scrollDirection: Axis.vertical,
+                                              itemCount: tickets.length,
+                                              itemBuilder:
+                                                  (context, ticketsIndex) {
+                                                final ticketsItem =
+                                                    tickets[ticketsIndex];
+                                                return Container(
+                                                  width: 120.0,
+                                                  height: 50.0,
+                                                  decoration: BoxDecoration(
+                                                    color: FFTheme.of(context)
+                                                        .secondaryBackground,
+                                                    image: DecorationImage(
+                                                      fit: BoxFit.fitWidth,
+                                                      image: Image.asset(
+                                                        'assets/images/LOGO-RIFAMAS-papeleta-small.webp',
+                                                      ).image,
+                                                    ),
                                                   ),
-                                                ),
-                                                child: Align(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          0.00, 0.00),
-                                                  child: Text(
-                                                    ticketsItem.toString(),
-                                                    style: FFTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Montserrat',
-                                                          color: FFTheme.of(
-                                                                  context)
-                                                              .secondaryBackground,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
+                                                  child: Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            0.00, 0.00),
+                                                    child: Text(
+                                                      ticketsItem.toString(),
+                                                      style: FFTheme.of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Montserrat',
+                                                            color: FFTheme.of(
+                                                                    context)
+                                                                .secondaryBackground,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                    ),
                                                   ),
-                                                ),
-                                              );
-                                            },
-                                          );
+                                                );
+                                              },
+                                            );
+                                          } else {
+                                            return CircularProgressIndicator();
+                                          }
                                         },
                                       ),
                                     ),

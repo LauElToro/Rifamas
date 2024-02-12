@@ -267,14 +267,16 @@ class _ProductsLoadingListWidgetWidgetState
         color: FFTheme.of(context).secondaryBackground,
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 10.0),
+        // padding: EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 10.0),
+        padding: EdgeInsets.all(0),
         child: GridView(
           padding: EdgeInsets.zero,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 30.0,
             mainAxisSpacing: 15.0,
-            childAspectRatio: 0.6,
+            childAspectRatio: 0.1,
+            //! TODO : FIRST CHANGE
           ),
           scrollDirection: Axis.vertical,
           children: [
@@ -320,8 +322,7 @@ class _ProductsLoadingListWidgetWidgetState
                                     'assets/images/white-shimer.jpg',
                                     width:
                                         MediaQuery.sizeOf(context).width * 0.1,
-                                    height:
-                                        MediaQuery.sizeOf(context).height * 1.2,
+                                    height: MediaQuery.sizeOf(context).height,
                                     fit: BoxFit.cover,
                                     alignment: Alignment(1.00, 0.00),
                                   ),

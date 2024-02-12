@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+
 class LoginPageModel extends FFModel<LoginPageWidget> {
   ///  Local state fields for this page.
 
@@ -22,7 +23,7 @@ class LoginPageModel extends FFModel<LoginPageWidget> {
 
   ///  State fields for stateful widgets in this page.
 
-final unfocusNode = FocusNode();
+  final unfocusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
   FocusNode? emailFocusNode;
   TextEditingController? emailController;
@@ -70,29 +71,32 @@ final unfocusNode = FocusNode();
     passwordController?.dispose();
   }
 
-  Future<void> signInWithGoogle() async {
+  Future<bool> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
       if (googleUser == null) {
-        return;
+        return false;
       }
 
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      return true;
       // Resto del código de manejo de sesión
     } catch (e) {
       print(e.toString());
+      return false;
     }
   }
 
- Future<void> signInWithFacebook() async {
+  Future<void> signInWithFacebook() async {
     try {
       final LoginResult loginResult = await FacebookAuth.instance.login();
 
@@ -100,9 +104,11 @@ final unfocusNode = FocusNode();
 
       if (loginResult.status == LoginStatus.success) {
         final AccessToken accessToken = loginResult.accessToken!;
-        final AuthCredential credential = FacebookAuthProvider.credential(accessToken.token);
+        final AuthCredential credential =
+            FacebookAuthProvider.credential(accessToken.token);
 
-        UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+        UserCredential userCredential =
+            await FirebaseAuth.instance.signInWithCredential(credential);
         // Resto del código de manejo de sesión.
       } else {
         print("Error: ${loginResult.message}");
@@ -112,4 +118,20 @@ final unfocusNode = FocusNode();
       print(e.toString());
     }
   }
+
+  Future<bool> signInWithEmailAndPassword(String email, String password) async {
+    print("entre");
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      print(credential.user!.email);
+      print("buen logeo");
+      return true;
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      return false;
+    }
   }
+}

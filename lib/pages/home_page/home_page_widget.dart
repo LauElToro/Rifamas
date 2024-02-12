@@ -144,6 +144,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             ),
                           ),
                           if (_model.loading == false)
+
+                            //! MEMBERSHIP API CALL
                             FutureBuilder<ApiCallResponse>(
                               future: FFAppState().membershipCache(
                                 requestFn: () => GetSubscriptionsCall.call(),
@@ -243,6 +245,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                   ),
                                                 ),
                                               ),
+
+                                              //! MemberShip Names
                                               Padding(
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(
@@ -328,11 +332,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         ),
                                   ),
                                 ),
+
+                                //! CATEGORIES ROW WIDGET
                                 Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     if (_model.loading == false)
                                       Expanded(
+                                        //! CATEGORIES API CALL
                                         child: FutureBuilder<ApiCallResponse>(
                                           future: FFAppState().categoriesCache(
                                             requestFn: () =>
@@ -525,6 +532,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   _model.gridViewPagingController?.refresh());
                               await _model.waitForOnePageForGridView();
                             },
+                            //! PRODUCTS API CALL
                             child: PagedGridView<ApiPagingParams, dynamic>(
                               pagingController: _model.setGridViewController(
                                 (nextPageMarker) => GetProductsCall.call(
@@ -644,6 +652,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           r'''$.meta_data''',
                                           true,
                                         )!),
+                                        status: functions.loteryDatesTo(
+                                            getJsonField(productsItem,
+                                                r'''$.meta_data''')),
+                                        maxTickets: functions.maxParticipants(
+                                            getJsonField(productsItem,
+                                                r'''$.meta_data''')),
                                         regularPrice: getJsonField(
                                           productsItem,
                                           r'''$.regular_price''',

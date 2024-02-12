@@ -67,7 +67,7 @@ class _MembershipComponentWidgetWidgetState
         height: 120.0,
         decoration: BoxDecoration(
           //color: FFTheme.of(context).alternate,
-          color: Colors.transparent,
+          // color: Colors.transparent,
           borderRadius: BorderRadius.circular(15.0),
           shape: BoxShape.rectangle,
           border: Border.all(color: Color.fromARGB(148, 68, 68, 68), width: 2),

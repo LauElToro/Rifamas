@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:ui';
 
 import '/ff/ff_theme.dart';
 import '/ff/ff_util.dart';
@@ -20,11 +21,15 @@ class ProductCardWidgetWidget extends StatefulWidget {
     required this.metadata,
     double? percentbar,
     String? type,
+    String? status,
+    String? maxTickets,
     this.regularPrice,
   })  : this.color = color ?? const Color(0xFFDEDEDE),
         this.participants = participants ?? 0,
         this.percentbar = percentbar ?? 0.0,
         this.type = type ?? 'lottery',
+        this.status = status ?? '0',
+        this.maxTickets = maxTickets ?? "0",
         super(key: key);
 
   final Color color;
@@ -36,6 +41,8 @@ class ProductCardWidgetWidget extends StatefulWidget {
   final double percentbar;
   final String type;
   final String? regularPrice;
+  final String status;
+  final String maxTickets;
 
   @override
   _ProductCardWidgetWidgetState createState() =>
@@ -44,6 +51,37 @@ class ProductCardWidgetWidget extends StatefulWidget {
 
 class _ProductCardWidgetWidgetState extends State<ProductCardWidgetWidget> {
   late ProductCardWidgetModel _model;
+
+  bool dateValidation(String data) {
+    final format = DateFormat("yyyy-MM-dd HH:mm");
+
+    final date = format.parse(data);
+    DateTime currentTime = DateTime.now();
+    try {
+      if (date.isAfter(format.parse(currentTime.toString()))) {
+        return true;
+      } else {
+        return false;
+      }
+    } on FormatException catch (error) {
+      // Manejar formato invalido aqui
+      print("TITULO ${widget.title}");
+      print("DATE: ${date}");
+      print("CURRENTTIME: ${format.parse(currentTime.toString())}");
+      print("Formato de fecha invalido: $error");
+      return false;
+    }
+  }
+
+  String banerString() {
+    if (widget.participants == int.parse(widget.maxTickets)) {
+      return "Rifa Finalizada";
+    } else if (widget.participants < int.parse(widget.maxTickets)) {
+      return "Rifa Fallida";
+    } else {
+      return "Exceso";
+    }
+  }
 
   @override
   void setState(VoidCallback callback) {
@@ -93,17 +131,45 @@ class _ProductCardWidgetWidgetState extends State<ProductCardWidgetWidget> {
               color: FFTheme.of(context).secondaryBackground,
               borderRadius: BorderRadius.circular(15.0),
             ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: Image.network(
-                valueOrDefault<String>(
-                  widget.image,
-                  'https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg',
+            // child: BackdropFilter(
+            //   filter: !dateValidation(widget.status)
+            //       ? ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0)
+            //       : ImageFilter.blur(sigmaX: 0.0, sigmaY: 0.0),
+            //   child: Container(
+            //     decoration: BoxDecoration(color: Colors.white.withOpacity(0.1)),
+            //   ),
+            // ),
+            child: Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: ImageFiltered(
+                    imageFilter: !dateValidation(widget.status)
+                        ? ImageFilter.blur(sigmaX: 10, sigmaY: 10)
+                        : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+                    child: Image.network(
+                      valueOrDefault<String>(
+                        widget.image,
+                        'https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg',
+                      ),
+                      width: MediaQuery.sizeOf(context).width * 1.0,
+                      height: 200.0,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
-                width: MediaQuery.sizeOf(context).width * 1.0,
-                height: 200.0,
-                fit: BoxFit.cover,
-              ),
+                !dateValidation(widget.status)
+                    ? Center(
+                        child: Text(
+                          banerString(),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      )
+                    : Container(),
+              ],
             ),
           ),
           Expanded(

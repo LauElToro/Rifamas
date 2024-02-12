@@ -49,6 +49,7 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     if (isiOS) {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
@@ -113,7 +114,7 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                                     child: Image.asset(
                                       'assets/images/logo.png',
                                       width: 150.0,
-                                      height: 150.0,
+                                      height: size.height * 0.1,
                                       fit: BoxFit.contain,
                                     ),
                                   ),
@@ -546,39 +547,41 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                                   ),
                                 ),
                                 Row(
-  mainAxisAlignment: MainAxisAlignment.center,
-  children: [
-    Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          GestureDetector(
-            onTap: () async {
-              await _model.registerWithGoogle();
-            },
-            child: Image.asset(
-              'assets/redes/google.png',
-              width: 50,
-              height: 35,
-            ),
-          ),
-          GestureDetector(
-            onTap: () async {
-              await _model.registerWithFacebook();
-            },
-            child: Image.asset(
-              'assets/redes/facebook.png',
-              width: 50,
-              height: 35,
-            ),
-          ),
-        ],
-      ),
-    ),
-  ],
-),
-
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 0.0, 16.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () async {
+                                              await _model.registerWithGoogle();
+                                            },
+                                            child: Image.asset(
+                                              'assets/redes/google.png',
+                                              width: 50,
+                                              height: 35,
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () async {
+                                              await _model
+                                                  .registerWithFacebook();
+                                            },
+                                            child: Image.asset(
+                                              'assets/redes/facebook.png',
+                                              width: 50,
+                                              height: 35,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                                 Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,

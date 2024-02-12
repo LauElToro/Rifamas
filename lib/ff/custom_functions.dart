@@ -52,6 +52,17 @@ String? filterPapeletas(
   return 'N/A';
 }
 
+String loteryDatesTo(List<dynamic> metadata) {
+  try {
+    var object =
+        metadata.firstWhere((item) => item['key'] == '_lottery_dates_to');
+    return object['value'].toString();
+  } catch (e) {
+    print("Ocurrio un error: $e");
+    return DateTime.now().toString();
+  }
+}
+
 String maxParticipants(List<dynamic> metadata) {
   try {
     var object = metadata.firstWhere((item) => item['key'] == '_max_tickets');

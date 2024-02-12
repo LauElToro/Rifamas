@@ -209,10 +209,10 @@ class LoginCall {
     String? username = '',
     String? password = '',
   }) async {
-    return ApiManager.instance.makeApiCall(
+    return await ApiManager.instance.makeApiCall(
       callName: 'login',
-      apiUrl: 'https://staging.rifamas.es/wp-json/api/v1/user_data',
-      //apiUrl: 'https://staging.rifamas.es/wp-json/jwt-auth/v1/token',
+      // apiUrl: 'https://staging.rifamas.es/wp-json/api/v1/user_data',
+      apiUrl: 'https://staging.rifamas.es/wp-json/jwt-auth/v1/token',
       callType: ApiCallType.POST,
       headers: {
         'username': username,
