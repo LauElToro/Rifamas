@@ -104,7 +104,8 @@ class _MembershipComponentWidgetWidgetState
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: Image.network(
-                      widget.image!,
+                      widget.image ??
+                          'https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg',
                       width: MediaQuery.sizeOf(context).width * 1.0,
                       fit: BoxFit.cover,
                     ),

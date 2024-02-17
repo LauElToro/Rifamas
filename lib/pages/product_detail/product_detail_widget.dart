@@ -221,10 +221,11 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget>
                                     ),
                                     child: Image.network(
                                       getJsonField(
-                                        productDetailGetSingleProductResponse
-                                            .jsonBody,
-                                        r'''$.images[0].src''',
-                                      ),
+                                            productDetailGetSingleProductResponse
+                                                .jsonBody,
+                                            r'''$.images[0].src''',
+                                          ) ??
+                                          'https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg',
                                       width: double.infinity,
                                       height: 320.0,
                                       fit: BoxFit.fitWidth,

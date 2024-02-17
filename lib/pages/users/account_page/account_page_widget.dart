@@ -53,12 +53,11 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
           : FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        key: scaffoldKey,
-        backgroundColor: FFTheme.of(context).secondaryBackground,
-        body: SafeArea(
-          top: true,
-          child: Stack(
+      child: SafeArea(
+        child: Scaffold(
+          key: scaffoldKey,
+          backgroundColor: FFTheme.of(context).secondaryBackground,
+          body: Stack(
             children: [
               Container(
                 width: MediaQuery.sizeOf(context).width * 1.0,
@@ -129,7 +128,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                     Text(
                                       getJsonField(
                                         FFAppState().jwtuser,
-                                        r'''$.username''',
+                                        r'''$.user_nicename''',
                                       ).toString(),
                                       style: FFTheme.of(context)
                                           .labelMedium
@@ -143,7 +142,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                     Text(
                                       getJsonField(
                                         FFAppState().jwtuser,
-                                        r'''$.email''',
+                                        r'''$.user_email''',
                                       ).toString(),
                                       style: FFTheme.of(context)
                                           .labelMedium

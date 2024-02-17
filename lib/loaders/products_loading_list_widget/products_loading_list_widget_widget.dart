@@ -275,7 +275,8 @@ class _ProductsLoadingListWidgetWidgetState
             crossAxisCount: 2,
             crossAxisSpacing: 30.0,
             mainAxisSpacing: 15.0,
-            childAspectRatio: 0.1,
+            // childAspectRatio: 0.1,
+            childAspectRatio: 0.5,
             //! TODO : FIRST CHANGE
           ),
           scrollDirection: Axis.vertical,

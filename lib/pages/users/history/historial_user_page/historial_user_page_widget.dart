@@ -1,3 +1,5 @@
+import 'package:jwt_decoder/jwt_decoder.dart';
+
 import '/components/secondaary_header_component_widget.dart';
 import '/ff/ff_theme.dart';
 import '/ff/ff_util.dart';
@@ -40,6 +42,7 @@ class _HistorialUserPageWidgetState extends State<HistorialUserPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    // final decodeJWT = JwtDecoder.decode(token)
     if (isiOS) {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
@@ -67,7 +70,7 @@ class _HistorialUserPageWidgetState extends State<HistorialUserPageWidget> {
               color: FFTheme.of(context).secondaryBackground,
             ),
             child: Column(
-              mainAxisSize: MainAxisSize.max,
+              // mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
@@ -75,7 +78,7 @@ class _HistorialUserPageWidgetState extends State<HistorialUserPageWidget> {
                       EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                   child: Container(
                     width: double.infinity,
-                    height: 150.0,
+                    height: 100.0,
                     decoration: BoxDecoration(
                       color: Colors.white,
                     ),
@@ -91,7 +94,8 @@ class _HistorialUserPageWidgetState extends State<HistorialUserPageWidget> {
                               width: 100.0,
                               height: 100.0,
                               decoration: BoxDecoration(
-                                color: FFTheme.of(context).alternate,
+                                // color: FFTheme.of(context).alternate,
+                                color: Colors.red,
                                 borderRadius: BorderRadius.circular(15.0),
                                 shape: BoxShape.rectangle,
                                 border: Border.all(
@@ -129,7 +133,7 @@ class _HistorialUserPageWidgetState extends State<HistorialUserPageWidget> {
                                 Text(
                                   getJsonField(
                                     FFAppState().jwtuser,
-                                    r'''$.username''',
+                                    r'''$.user_nicename''',
                                   ).toString(),
                                   style: FFTheme.of(context)
                                       .labelMedium
@@ -143,7 +147,7 @@ class _HistorialUserPageWidgetState extends State<HistorialUserPageWidget> {
                                 Text(
                                   getJsonField(
                                     FFAppState().jwtuser,
-                                    r'''$.email''',
+                                    r'''$.user_email''',
                                   ).toString(),
                                   style: FFTheme.of(context)
                                       .labelMedium

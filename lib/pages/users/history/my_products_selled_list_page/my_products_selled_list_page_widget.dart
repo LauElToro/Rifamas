@@ -1,3 +1,5 @@
+import 'package:jwt_decoder/jwt_decoder.dart';
+
 import '/backend/api_requests/api_calls.dart';
 import '/components/secondaary_header_component_widget.dart';
 import '/components/simple_product_card_widget_widget.dart';
@@ -42,6 +44,7 @@ class _MyProductsSelledListPageWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final decodedJWT = JwtDecoder.decode(FFAppState().jwtuser['token']);
     if (isiOS) {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
@@ -75,10 +78,10 @@ class _MyProductsSelledListPageWidgetState
               Expanded(
                 child: FutureBuilder<ApiCallResponse>(
                   future: GetProductsCall.call(
-                    author: getJsonField(
-                      FFAppState().jwtuser,
-                      r'''$.ID''',
-                    ),
+                    author: int.parse(getJsonField(
+                      decodedJWT['data']['user'],
+                      r'''$.id''',
+                    )),
                     type: 'simple',
                     perPage: 50,
                   ),
@@ -143,9 +146,9 @@ class _MyProductsSelledListPageWidgetState
                                 //   r'''$.image''',
                                 // ),
                                 image: valueOrDefault(
-                                  getJsonField(
-                                      productsItem, r'''$.images[0].src'''),
-                                  'http://'),
+                                    getJsonField(
+                                        productsItem, r'''$.images[0].src'''),
+                                    'http://'),
                               ),
                             );
                           },

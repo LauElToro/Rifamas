@@ -1,3 +1,5 @@
+import 'package:jwt_decoder/jwt_decoder.dart';
+
 import '/backend/api_requests/api_calls.dart';
 import '/components/header_component_widget.dart';
 import '/components/product_card_widget_widget.dart';
@@ -12,6 +14,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'my_product_list_all_page_model.dart';
 export 'my_product_list_all_page_model.dart';
+
+// Map<String, dynamic> decodedToken = {};
 
 class MyProductListAllPageWidget extends StatefulWidget {
   const MyProductListAllPageWidget({Key? key}) : super(key: key);
@@ -44,6 +48,8 @@ class _MyProductListAllPageWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final decodedToken = JwtDecoder.decode(FFAppState().jwtuser['token']);
+    print(decodedToken);
     if (isiOS) {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
@@ -142,7 +148,7 @@ class _MyProductListAllPageWidgetState
                         ),
                         Container(
                           width: MediaQuery.sizeOf(context).width * 1.0,
-                          height: 450.0,
+                          height: 350.0,
                           decoration: BoxDecoration(
                             color: FFTheme.of(context).accent4,
                           ),
@@ -178,9 +184,16 @@ class _MyProductListAllPageWidgetState
                                 ),
                                 FutureBuilder<ApiCallResponse>(
                                   future: GetProductsCall.call(
-                                    author: getJsonField(
-                                      FFAppState().jwtuser,
-                                      r'''$.ID''',
+                                    // perPage: 2,
+                                    // author: getJsonField(
+                                    //   FFAppState().jwtuser,
+                                    //   r'''$.id''',
+                                    // ),
+                                    author: int.parse(
+                                      getJsonField(
+                                        decodedToken['data']['user'],
+                                        r'''$.id''',
+                                      ),
                                     ),
                                     type: 'lottery',
                                   ),
@@ -202,105 +215,111 @@ class _MyProductListAllPageWidgetState
                                     }
                                     final rowGetProductsResponse =
                                         snapshot.data!;
-                                    return Builder(
-                                      builder: (context) {
-                                        final productx = getJsonField(
-                                          rowGetProductsResponse.jsonBody,
-                                          r'''$''',
-                                        ).toList();
-                                        return Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: List.generate(
-                                              productx.length, (productxIndex) {
-                                            final productxItem =
-                                                productx[productxIndex];
-                                            return Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0, 0.0, 15.0, 0.0),
-                                              child: Container(
-                                                  width:
-                                                      MediaQuery.sizeOf(context)
-                                                              .width *
-                                                          0.45,
-                                                  height: 270.0,
-                                                  decoration: BoxDecoration(
-                                                    color: FFTheme.of(context)
-                                                        .secondaryBackground,
-                                                  ),
-                                                  child: InkWell(
-                                                    splashColor:
-                                                        Colors.transparent,
-                                                    focusColor:
-                                                        Colors.transparent,
-                                                    hoverColor:
-                                                        Colors.transparent,
-                                                    highlightColor:
-                                                        Colors.transparent,
-                                                    onTap: () async {
-                                                      context.pushNamed(
-                                                        'ProductDetail',
-                                                        queryParameters: {
-                                                          'idProduct':
-                                                              serializeParam(
-                                                            getJsonField(
-                                                              productxItem,
-                                                              r'''$.id''',
-                                                            ),
-                                                            ParamType.int,
-                                                          ),
-                                                        }.withoutNulls,
-                                                      );
-                                                    },
-                                                    child:
-                                                        ProductCardWidgetWidget(
-                                                      key: Key(
-                                                          'Keyohj_${productxIndex}_of_${productx.length}'),
+                                    return Builder(builder: (context) {
+                                      final productx = getJsonField(
+                                        rowGetProductsResponse.jsonBody,
+                                        r'''$''',
+                                      ).toList();
+                                      return SizedBox(
+                                        width: double.infinity,
+                                        height: 270,
+                                        child: ListView.builder(
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount: (getJsonField(
+                                                    rowGetProductsResponse
+                                                        .jsonBody,
+                                                    r'''$'''))
+                                                .length,
+                                            itemBuilder:
+                                                (context, productxIndex) {
+                                              final productxItem =
+                                                  productx[productxIndex];
+                                              return Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 0.0, 15.0, 0.0),
+                                                child: Container(
+                                                    width: MediaQuery.sizeOf(
+                                                                context)
+                                                            .width *
+                                                        0.45,
+                                                    height: 270.0,
+                                                    decoration: BoxDecoration(
                                                       color: FFTheme.of(context)
                                                           .secondaryBackground,
-                                                      title: getJsonField(
-                                                        productxItem,
-                                                        r'''$.name''',
-                                                      ).toString(),
-                                                      price: getJsonField(
-                                                        productxItem,
-                                                        r'''$.price''',
-                                                      ).toString(),
-                                                      image: valueOrDefault<
-                                                          String>(
-                                                        getJsonField(
-                                                          productxItem,
-                                                          r'''$.images[0].src''',
-                                                        ),
-                                                        'http://',
-                                                      ),
-                                                      participants:
-                                                          getJsonField(
-                                                        productxItem,
-                                                        r'''$.participants''',
-                                                      ),
-                                                      metadata: getJsonField(
-                                                        productxItem,
-                                                        r'''$.meta_data''',
-                                                      ),
-                                                      percentbar: getJsonField(
-                                                            productxItem,
-                                                            r'''$.porcent_products''',
-                                                          ).toDouble() /
-                                                          100,
-                                                      type: getJsonField(
-                                                        productxItem,
-                                                        r'''$.type''',
-                                                      ).toString(),
                                                     ),
-                                                  )),
-                                            );
-                                          }),
-                                        );
-                                      },
-                                    );
+                                                    child: InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        context.pushNamed(
+                                                          'ProductDetail',
+                                                          queryParameters: {
+                                                            'idProduct':
+                                                                serializeParam(
+                                                              getJsonField(
+                                                                productxItem,
+                                                                r'''$.id''',
+                                                              ),
+                                                              ParamType.int,
+                                                            ),
+                                                          }.withoutNulls,
+                                                        );
+                                                      },
+                                                      child:
+                                                          ProductCardWidgetWidget(
+                                                        key: Key(
+                                                            'Keyohj_${productxIndex}_of_${productx.length}'),
+                                                        color: FFTheme.of(
+                                                                context)
+                                                            .secondaryBackground,
+                                                        title: getJsonField(
+                                                          productxItem,
+                                                          r'''$.name''',
+                                                        ).toString(),
+                                                        price: getJsonField(
+                                                          productxItem,
+                                                          r'''$.price''',
+                                                        ).toString(),
+                                                        image: valueOrDefault<
+                                                            String>(
+                                                          getJsonField(
+                                                            productxItem,
+                                                            r'''$.images[0].src''',
+                                                          ),
+                                                          'http://',
+                                                        ),
+                                                        participants:
+                                                            getJsonField(
+                                                          productxItem,
+                                                          r'''$.participants''',
+                                                        ),
+                                                        metadata: getJsonField(
+                                                          productxItem,
+                                                          r'''$.meta_data''',
+                                                        ),
+                                                        percentbar:
+                                                            getJsonField(
+                                                                  productxItem,
+                                                                  r'''$.porcent_products''',
+                                                                ).toDouble() /
+                                                                100,
+                                                        type: getJsonField(
+                                                          productxItem,
+                                                          r'''$.type''',
+                                                        ).toString(),
+                                                      ),
+                                                    )),
+                                              );
+                                            }),
+                                      );
+                                    });
                                   },
                                 ),
                               ],
