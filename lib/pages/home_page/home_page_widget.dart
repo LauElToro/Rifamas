@@ -607,6 +607,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       ),
                                       updateCallback: () => setState(() {}),
                                       child: ProductCardWidgetWidget(
+                                        showStatus: true,
                                         key: Key(
                                           'Keyg11_${productsIndex.toString()}',
                                         ),

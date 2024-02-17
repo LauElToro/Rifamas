@@ -1,3 +1,5 @@
+import 'package:jwt_decoder/jwt_decoder.dart';
+
 import '/backend/api_requests/api_calls.dart';
 import '/components/header_component_widget.dart';
 import '/components/membership_component_widget_widget.dart';
@@ -41,6 +43,8 @@ class _MemberListPageWidgetState extends State<MemberListPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final decodedJWT = JwtDecoder.decode(FFAppState().jwtuser['token']);
+
     if (isiOS) {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
@@ -59,20 +63,19 @@ class _MemberListPageWidgetState extends State<MemberListPageWidget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FFTheme.of(context).primaryBackground,
-        body: Align(
-          alignment: AlignmentDirectional(0.00, 1.00),
-          child: Stack(
-            alignment: AlignmentDirectional(0.0, 1.0),
-            children: [
-              Container(
-                width: MediaQuery.sizeOf(context).width * 1.0,
-                height: MediaQuery.sizeOf(context).height * 1.0 - 25,
-                decoration: BoxDecoration(
-                  color: FFTheme.of(context).secondaryBackground,
-                ),
-                child: SingleChildScrollView(
+        body: SafeArea(
+          child: Align(
+            alignment: AlignmentDirectional(0.00, 1.00),
+            child: Stack(
+              alignment: AlignmentDirectional(0.0, 1.0),
+              children: [
+                Container(
+                  width: MediaQuery.sizeOf(context).width * 1.0,
+                  height: MediaQuery.sizeOf(context).height * 1.0,
+                  decoration: BoxDecoration(
+                    color: FFTheme.of(context).secondaryBackground,
+                  ),
                   child: Column(
-                    mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       wrapWithModel(
@@ -144,24 +147,25 @@ class _MemberListPageWidgetState extends State<MemberListPageWidget> {
                           ),
                         ],
                       ),
-                      Container(
-                        width: MediaQuery.sizeOf(context).width * 1.0,
-                        height: 350.0,
-                        decoration: BoxDecoration(
-                          color: FFTheme.of(context).accent4,
-                        ),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              10.0, 10.0, 10.0, 10.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 15.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
+                      Expanded(
+                        // flex: 1,
+                        child: Container(
+                          width: MediaQuery.sizeOf(context).width * 1.0,
+                          // height: 200.0,
+                          decoration: BoxDecoration(
+                            color: FFTheme.of(context).accent4,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                              10.0,
+                              10.0,
+                              10.0,
+                              10.0,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
@@ -178,140 +182,210 @@ class _MemberListPageWidgetState extends State<MemberListPageWidget> {
                                     ),
                                   ],
                                 ),
-                              ),
-                              FutureBuilder<ApiCallResponse>(
-                                future: GetSubscriptionsCall.call(
-                                    author: getJsonField(
-                                            FFAppState().jwtuser, r'''$.ID''')
-                                        .toString()),
-                                builder: (context, snapshot) {
-                                  // Customize what your widget looks like when it's loading.
-                                  if (!snapshot.hasData) {
-                                    return Center(
-                                      child: SizedBox(
-                                        width: 50.0,
-                                        height: 50.0,
-                                        child: CircularProgressIndicator(
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                            FFTheme.of(context).primary,
+                                FutureBuilder<ApiCallResponse>(
+                                  future: GetSubscriptionsCall.call(
+                                      author: getJsonField(
+                                          decodedJWT, r'''$.id''')),
+                                  builder: (context, snapshot) {
+                                    // Customize what your widget looks like when it's loading.
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 50.0,
+                                          height: 50.0,
+                                          child: CircularProgressIndicator(
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                              FFTheme.of(context).primary,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    );
-                                  }
-                                  final columnGetSubscriptionsResponse =
-                                      snapshot.data!;
-                                  return Builder(
-                                    builder: (context) {
-                                      final subscriptions = getJsonField(
-                                        columnGetSubscriptionsResponse.jsonBody,
-                                        r'''$''',
-                                      ).toList().take(2).toList();
-                                      return Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children:
-                                            List.generate(subscriptions.length,
-                                                (subscriptionsIndex) {
-                                          final subscriptionsItem =
-                                              subscriptions[subscriptionsIndex];
-                                          return MembershipComponentWidgetWidget(
-                                            key: Key(
-                                                'Keydnm_${subscriptionsIndex}_of_${subscriptions.length}'),
-                                            price: getJsonField(
-                                              subscriptionsItem,
-                                              r'''$.prices''',
-                                            ).toString(),
-                                            cantSorteos: getJsonField(
-                                              subscriptionsItem,
-                                              r'''$.sorteos''',
-                                            ).toString(),
-                                            title: getJsonField(
-                                              subscriptionsItem,
-                                              r'''$.name''',
-                                            ).toString(),
-                                            image: getJsonField(
-                                              subscriptionsItem,
-                                              r'''$.image''',
-                                            ),
-                                            idMembership: getJsonField(
-                                              subscriptionsItem,
-                                              r'''$.id''',
-                                            ),
-                                          );
-                                        }),
                                       );
-                                    },
-                                  );
-                                },
-                              ),
-                            ],
+                                    }
+                                    final columnGetSubscriptionsResponse =
+                                        snapshot.data!;
+                                    return Builder(
+                                      builder: (context) {
+                                        final subscriptions = getJsonField(
+                                          columnGetSubscriptionsResponse
+                                              .jsonBody,
+                                          r'''$''',
+                                        );
+                                        return Expanded(
+                                          child: ListView.builder(
+                                              itemCount: subscriptions.length,
+                                              itemBuilder: (context,
+                                                  subscriptionsIndex) {
+                                                final subscriptionsItem =
+                                                    subscriptions[
+                                                        subscriptionsIndex];
+                                                return MembershipComponentWidgetWidget(
+                                                  key: Key(
+                                                      'Keydnm_${subscriptionsIndex}_of_${subscriptions.length}'),
+                                                  price: getJsonField(
+                                                    subscriptionsItem,
+                                                    r'''$.prices''',
+                                                  ).toString(),
+                                                  cantSorteos: getJsonField(
+                                                    subscriptionsItem,
+                                                    r'''$.sorteos''',
+                                                  ).toString(),
+                                                  title: getJsonField(
+                                                    subscriptionsItem,
+                                                    r'''$.name''',
+                                                  ).toString(),
+                                                  image: getJsonField(
+                                                    subscriptionsItem,
+                                                    r'''$.image''',
+                                                  ),
+                                                  idMembership: getJsonField(
+                                                    subscriptionsItem,
+                                                    r'''$.id''',
+                                                  ),
+                                                );
+                                              }),
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                      Container(
-                        width: MediaQuery.sizeOf(context).width * 1.0,
-                        height: 350.0,
-                        decoration: BoxDecoration(
-                          color: Color(0xFFEDEDED),
-                          border: Border.all(
-                            color: FFTheme.of(context).alternate,
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          width: MediaQuery.sizeOf(context).width * 1.0,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFEDEDED),
+                            border: Border.all(
+                              color: FFTheme.of(context).alternate,
+                            ),
                           ),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              10.0, 10.0, 10.0, 10.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 15.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'SUSCRITAS',
-                                      style: FFTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Montserrat',
-                                            color: FFTheme.of(context).primary,
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                    ),
-                                  ],
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                10.0, 10.0, 10.0, 10.0),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 15.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'SUSCRITAS',
+                                        style: FFTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Montserrat',
+                                              color:
+                                                  FFTheme.of(context).primary,
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                                FutureBuilder<ApiCallResponse>(
+                                  future: GetSubscriptionsCall.call(
+                                      author: getJsonField(
+                                          decodedJWT, r'''$.id''')),
+                                  builder: (context, snapshot) {
+                                    // Customize what your widget looks like when it's loading.
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 50.0,
+                                          height: 50.0,
+                                          child: CircularProgressIndicator(
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                              FFTheme.of(context).primary,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    final columnGetSubscriptionsResponse =
+                                        snapshot.data!;
+                                    return Builder(
+                                      builder: (context) {
+                                        final subscriptions = getJsonField(
+                                          columnGetSubscriptionsResponse
+                                              .jsonBody,
+                                          r'''$''',
+                                        );
+                                        return Expanded(
+                                          child: ListView.builder(
+                                            padding:
+                                                EdgeInsets.only(bottom: 50),
+                                            itemCount: subscriptions.length,
+                                            itemBuilder:
+                                                (context, subscriptionsIndex) {
+                                              final subscriptionsItem =
+                                                  subscriptions[
+                                                      subscriptionsIndex];
+                                              return MembershipComponentWidgetWidget(
+                                                key: Key(
+                                                    'Keydnm_${subscriptionsIndex}_of_${subscriptions.length}'),
+                                                price: getJsonField(
+                                                  subscriptionsItem,
+                                                  r'''$.prices''',
+                                                ).toString(),
+                                                cantSorteos: getJsonField(
+                                                  subscriptionsItem,
+                                                  r'''$.sorteos''',
+                                                ).toString(),
+                                                title: getJsonField(
+                                                  subscriptionsItem,
+                                                  r'''$.name''',
+                                                ).toString(),
+                                                image: getJsonField(
+                                                  subscriptionsItem,
+                                                  r'''$.image''',
+                                                ),
+                                                idMembership: getJsonField(
+                                                  subscriptionsItem,
+                                                  r'''$.id''',
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-              Container(
-                width: MediaQuery.sizeOf(context).width * 1.0,
-                height: 80.0,
-                decoration: BoxDecoration(
-                  color: Color(0x00FFFFFF),
-                ),
-                child: wrapWithModel(
-                  model: _model.bottomNavigationHomeComponentModel,
-                  updateCallback: () => setState(() {}),
-                  child: BottomNavigationHomeComponentWidget(
-                    page: 'rifas',
+                Container(
+                  width: MediaQuery.sizeOf(context).width * 1.0,
+                  height: 80.0,
+                  decoration: BoxDecoration(
+                    color: Color(0x00FFFFFF),
+                  ),
+                  child: wrapWithModel(
+                    model: _model.bottomNavigationHomeComponentModel,
+                    updateCallback: () => setState(() {}),
+                    child: BottomNavigationHomeComponentWidget(
+                      page: 'rifas',
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

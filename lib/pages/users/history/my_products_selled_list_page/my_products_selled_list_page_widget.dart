@@ -1,3 +1,5 @@
+import 'package:jwt_decoder/jwt_decoder.dart';
+
 import '/backend/api_requests/api_calls.dart';
 import '/components/secondaary_header_component_widget.dart';
 import '/components/simple_product_card_widget_widget.dart';
@@ -42,6 +44,7 @@ class _MyProductsSelledListPageWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final decodedJWT = JwtDecoder.decode(FFAppState().jwtuser['token']);
     if (isiOS) {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
@@ -75,10 +78,10 @@ class _MyProductsSelledListPageWidgetState
               Expanded(
                 child: FutureBuilder<ApiCallResponse>(
                   future: GetProductsCall.call(
-                    author: getJsonField(
-                      FFAppState().jwtuser,
-                      r'''$.ID''',
-                    ),
+                    author: int.parse(getJsonField(
+                      decodedJWT['data']['user'],
+                      r'''$.id''',
+                    )),
                     type: 'simple',
                     perPage: 50,
                   ),
@@ -117,20 +120,35 @@ class _MyProductsSelledListPageWidgetState
                           itemCount: products.length,
                           itemBuilder: (context, productsIndex) {
                             final productsItem = products[productsIndex];
-                            return SimpleProductCardWidgetWidget(
-                              key: Key(
-                                  'Key69b_${productsIndex}_of_${products.length}'),
-                              title: getJsonField(
-                                productsItem,
-                                r'''$.name''',
-                              ).toString(),
-                              price: getJsonField(
-                                productsItem,
-                                r'''$.price''',
-                              ).toString(),
-                              image: getJsonField(
-                                productsItem,
-                                r'''$.image''',
+                            return InkWell(
+                              onTap: () {
+                                context.pushNamed("ProductDetail",
+                                    queryParameters: {
+                                      "idProduct": serializeParam(
+                                          getJsonField(
+                                              productsItem, r'''$.id'''),
+                                          ParamType.int)
+                                    }.withoutNulls);
+                              },
+                              child: SimpleProductCardWidgetWidget(
+                                key: Key(
+                                    'Key69b_${productsIndex}_of_${products.length}'),
+                                title: getJsonField(
+                                  productsItem,
+                                  r'''$.name''',
+                                ).toString(),
+                                price: getJsonField(
+                                  productsItem,
+                                  r'''$.price''',
+                                ).toString(),
+                                // image: getJsonField(
+                                //   productsItem,
+                                //   r'''$.image''',
+                                // ),
+                                image: valueOrDefault(
+                                    getJsonField(
+                                        productsItem, r'''$.images[0].src'''),
+                                    'http://'),
                               ),
                             );
                           },

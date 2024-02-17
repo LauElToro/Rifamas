@@ -1,3 +1,5 @@
+import 'package:jwt_decoder/jwt_decoder.dart';
+
 import '/backend/api_requests/api_calls.dart';
 import '/components/secondaary_header_component_widget.dart';
 import '/components/simple_product_card_widget_widget.dart';
@@ -42,6 +44,7 @@ class _MyProductsBuyedListPageWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final decodedJWT = JwtDecoder.decode(FFAppState().jwtuser['token']);
     if (isiOS) {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
@@ -75,10 +78,10 @@ class _MyProductsBuyedListPageWidgetState
               Expanded(
                 child: FutureBuilder<ApiCallResponse>(
                   future: MyOrderedProductsCall.call(
-                    userId: getJsonField(
-                      FFAppState().jwtuser,
-                      r'''$.ID''',
-                    ),
+                    userId: int.parse(getJsonField(
+                      decodedJWT['data']['user'],
+                      r'''$.id''',
+                    )),
                     type: 'simple',
                   ),
                   builder: (context, snapshot) {
@@ -102,7 +105,7 @@ class _MyProductsBuyedListPageWidgetState
                         final products = getJsonField(
                           gridViewMyOrderedProductsResponse.jsonBody,
                           r'''$''',
-                        ).toList();
+                        );
                         return GridView.builder(
                           padding: EdgeInsets.zero,
                           gridDelegate:
@@ -127,10 +130,10 @@ class _MyProductsBuyedListPageWidgetState
                                 productsItem,
                                 r'''$.price''',
                               ).toString(),
-                              image: getJsonField(
-                                productsItem,
-                                r'''$.image''',
-                              ),
+                              image: valueOrDefault(
+                                  getJsonField(
+                                      productsItem, r'''$.images[0].src'''),
+                                  'http://'),
                             );
                           },
                         );

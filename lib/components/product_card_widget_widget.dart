@@ -23,6 +23,7 @@ class ProductCardWidgetWidget extends StatefulWidget {
     String? type,
     String? status,
     String? maxTickets,
+    bool? showStatus,
     this.regularPrice,
   })  : this.color = color ?? const Color(0xFFDEDEDE),
         this.participants = participants ?? 0,
@@ -30,8 +31,10 @@ class ProductCardWidgetWidget extends StatefulWidget {
         this.type = type ?? 'lottery',
         this.status = status ?? '0',
         this.maxTickets = maxTickets ?? "0",
+        this.showStatus = showStatus ?? false,
         super(key: key);
 
+  final bool showStatus;
   final Color color;
   final String? title;
   final String? price;
@@ -53,22 +56,17 @@ class _ProductCardWidgetWidgetState extends State<ProductCardWidgetWidget> {
   late ProductCardWidgetModel _model;
 
   bool dateValidation(String data) {
-    final format = DateFormat("yyyy-MM-dd HH:mm");
-
-    final date = format.parse(data);
-    DateTime currentTime = DateTime.now();
     try {
+      final format = DateFormat("yyyy-MM-dd HH:mm");
+      final date = format.parse(data);
+      DateTime currentTime = DateTime.now();
       if (date.isAfter(format.parse(currentTime.toString()))) {
         return true;
       } else {
         return false;
       }
-    } on FormatException catch (error) {
-      // Manejar formato invalido aqui
-      print("TITULO ${widget.title}");
-      print("DATE: ${date}");
-      print("CURRENTTIME: ${format.parse(currentTime.toString())}");
-      print("Formato de fecha invalido: $error");
+    } on FormatException catch (e) {
+      print(e);
       return false;
     }
   }
@@ -131,22 +129,15 @@ class _ProductCardWidgetWidgetState extends State<ProductCardWidgetWidget> {
               color: FFTheme.of(context).secondaryBackground,
               borderRadius: BorderRadius.circular(15.0),
             ),
-            // child: BackdropFilter(
-            //   filter: !dateValidation(widget.status)
-            //       ? ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0)
-            //       : ImageFilter.blur(sigmaX: 0.0, sigmaY: 0.0),
-            //   child: Container(
-            //     decoration: BoxDecoration(color: Colors.white.withOpacity(0.1)),
-            //   ),
-            // ),
             child: Stack(
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: ImageFiltered(
-                    imageFilter: !dateValidation(widget.status)
-                        ? ImageFilter.blur(sigmaX: 10, sigmaY: 10)
-                        : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+                    imageFilter:
+                        !dateValidation(widget.status) && widget.showStatus
+                            ? ImageFilter.blur(sigmaX: 10, sigmaY: 10)
+                            : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
                     child: Image.network(
                       valueOrDefault<String>(
                         widget.image,
@@ -158,17 +149,18 @@ class _ProductCardWidgetWidgetState extends State<ProductCardWidgetWidget> {
                     ),
                   ),
                 ),
-                !dateValidation(widget.status)
-                    ? Center(
-                        child: Text(
-                          banerString(),
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      )
-                    : Container(),
+                if (widget.showStatus)
+                  !dateValidation(widget.status)
+                      ? Center(
+                          child: Text(
+                            banerString(),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        )
+                      : Container(),
               ],
             ),
           ),
@@ -218,7 +210,7 @@ class _ProductCardWidgetWidgetState extends State<ProductCardWidgetWidget> {
                               ),
                             ),
                             Text(
-                              '${double.parse(widget.price!).toStringAsFixed(2).replaceAll(".", ",")}€',
+                              "${widget.price.toString().replaceAll(".", ",")} €",
                               style: FFTheme.of(context).bodyMedium.override(
                                     fontFamily: 'Montserrat',
                                     fontSize: 14.0,
