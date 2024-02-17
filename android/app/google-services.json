@@ -1,26 +1,120 @@
 {
   "project_info": {
-    "project_number": "282073103436",
-    "project_id": "rifamas-8ab33",
-    "storage_bucket": "rifamas-8ab33.appspot.com"
+    "project_number": "352707650401",
+    "firebase_url": "https://apprifa-d88c7.firebaseio.com",
+    "project_id": "apprifa-d88c7",
+    "storage_bucket": "apprifa-d88c7.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:282073103436:android:0af5cbf24a95cc797288e9",
+        "mobilesdk_app_id": "1:352707650401:android:4328f1ddc02e5d8d75db20",
         "android_client_info": {
           "package_name": "com.rifamas.app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "352707650401-7q1d8bvgiqkcaqnpolcbce9j8gpgml5a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rifamas.app",
+            "certificate_hash": "7c324d2f11d0522e1ab28add4ff57769b2b86aeb"
+          }
+        },
+        {
+          "client_id": "352707650401-drrslst7q1cp5tcaqlkvr4aqmeqk1ame.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyBbwyNuDW6Iuizehhl-LTpgw8yDTXhzI-A"
+          "current_key": "AIzaSyDSSVOSw8FU7_XSm8EMnt6NvR0iUvwAaLI"
+        },
+        {
+          "current_key": "AIzaSyBRZQlXh4CjdKtsQ8f3kK6KKYDPX5hBqfU"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "352707650401-drrslst7q1cp5tcaqlkvr4aqmeqk1ame.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:352707650401:android:3003ddfed7803c5b75db20",
+        "android_client_info": {
+          "package_name": "com.tesei.apprifa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "352707650401-88hu31tcq73va5iie7u6ggq31d9cgbee.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tesei.apprifa",
+            "certificate_hash": "2d1afea8f045f13120c063aa939bd4c225e27303"
+          }
+        },
+        {
+          "client_id": "352707650401-drrslst7q1cp5tcaqlkvr4aqmeqk1ame.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSSVOSw8FU7_XSm8EMnt6NvR0iUvwAaLI"
+        },
+        {
+          "current_key": "AIzaSyBRZQlXh4CjdKtsQ8f3kK6KKYDPX5hBqfU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "352707650401-drrslst7q1cp5tcaqlkvr4aqmeqk1ame.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:352707650401:android:b2b7fac799aaa4d675db20",
+        "android_client_info": {
+          "package_name": "com.tesei.apprifa2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "352707650401-drrslst7q1cp5tcaqlkvr4aqmeqk1ame.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSSVOSw8FU7_XSm8EMnt6NvR0iUvwAaLI"
+        },
+        {
+          "current_key": "AIzaSyBRZQlXh4CjdKtsQ8f3kK6KKYDPX5hBqfU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "352707650401-drrslst7q1cp5tcaqlkvr4aqmeqk1ame.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

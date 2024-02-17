@@ -171,7 +171,7 @@ class _ChatListPageWidgetState extends State<ChatListPageWidget> {
                                       r'''$.ID''',
                                     ),
                                   )
-                                  .orderBy('last_message_time'),
+                                  .orderBy('created', descending: true),
                             ),
                             builder: (context, snapshot) {
                               // Customize what your widget looks like when it's loading.

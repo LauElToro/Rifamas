@@ -211,8 +211,8 @@ class LoginCall {
   }) async {
     return await ApiManager.instance.makeApiCall(
       callName: 'login',
-      // apiUrl: 'https://staging.rifamas.es/wp-json/api/v1/user_data',
-      apiUrl: 'https://staging.rifamas.es/wp-json/jwt-auth/v1/token',
+      apiUrl: 'https://staging.rifamas.es/wp-json/api/v1/user_data',
+      // apiUrl: 'https://staging.rifamas.es/wp-json/jwt-auth/v1/token',
       callType: ApiCallType.POST,
       headers: {
         'username': username,
@@ -280,9 +280,12 @@ class RegisterCall {
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'register',
-      apiUrl: 'https://staging.rifamas.es/wp-json/wp/v2/users/',
+      // apiUrl: 'https://staging.rifamas.es/wp-json/wc/v2/users/',
+      apiUrl: 'https://staging.rifamas.es/wp-json/wc/v3/customers/',
       callType: ApiCallType.POST,
-      headers: {},
+      headers: {
+        'Authorization': 'Basic Y2tfYWEzMzZiMjkxZDdmMjhiNTdjODMwYWU1NDcyYTA2ZDRkOGU2YTFlZTpjc183MjhjYjM5Y2MzMmM0ZDVkMjZjMDE5NzdiODRjYmE1ODBiY2EzNmM5'
+      },
       params: {
         'username': username,
         'name': name,
@@ -291,6 +294,8 @@ class RegisterCall {
         'email': email,
         'password': password,
         'roles': roles,
+        'consumer_key': "ck_aa336b291d7f28b57c830ae5472a06d4d8e6a1ee",
+        'consumer_secret': "cs_728cb39cc32c4d5d26c01977b84cba580bca36c9",
       },
       bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
       returnBody: true,

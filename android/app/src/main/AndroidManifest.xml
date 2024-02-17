@@ -37,9 +37,6 @@
               android:name="io.flutter.embedding.android.SplashScreenDrawable"
               android:resource="@drawable/launch_background"
               />
-              <meta-data
-    android:name="com.facebook.sdk.ApplicationId"
-    android:value="@string/facebook_app_id" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -62,6 +59,8 @@
             android:value="2" />
 
 
-
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id" />
+        <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
+        <meta-data android:name="flutterEmbedding" android:value="2" />
     </application>
 </manifest>

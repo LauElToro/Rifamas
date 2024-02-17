@@ -178,7 +178,6 @@ class _MyProductListAllPageWidgetState
                                 ),
                                 FutureBuilder<ApiCallResponse>(
                                   future: GetProductsCall.call(
-                                    perPage: 2,
                                     author: getJsonField(
                                       FFAppState().jwtuser,
                                       r'''$.ID''',

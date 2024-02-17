@@ -31,7 +31,7 @@ class LoteriesCreatePageCopyModel
 
   int? maxTickets = 0;
 
-  int? lotteryPrice;
+  int? lotteryPrice = 0;
 
   List<dynamic> categories = [];
   void addToCategories(dynamic item) => categories.add(item);

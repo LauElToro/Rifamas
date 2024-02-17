@@ -65,7 +65,7 @@ class _LoteriesCreatePageCopyWidgetState
     _model.lotteryPriceController ??= TextEditingController(
         text: valueOrDefault<String>(
       ((int price, int tickets) {
-        return (price != null && tickets != null) ? price / tickets : 0;
+        return (price != null || tickets != null) ? price / tickets : 0;
       }(_model.productPrice!, _model.maxTickets!))
           .toString(),
       '0',

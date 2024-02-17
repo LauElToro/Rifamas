@@ -1630,8 +1630,7 @@ class _LoteriesCreatePageWidgetState extends State<LoteriesCreatePageWidget> {
                                                   FFTheme.of(context).info,
                                             ),
                                           ),
-                                          Expanded(
-                                            child: Padding(
+                                          Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(
                                                       0.0, 10.0, 0.0, 10.0),
@@ -1647,7 +1646,6 @@ class _LoteriesCreatePageWidgetState extends State<LoteriesCreatePageWidget> {
                                                     ),
                                               ),
                                             ),
-                                          ),
                                         ],
                                       ),
                                     ],

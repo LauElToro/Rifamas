@@ -97,6 +97,9 @@ class _MyProductsBuyedListPageWidgetState
                       );
                     }
                     final gridViewMyOrderedProductsResponse = snapshot.data!;
+                    if (gridViewMyOrderedProductsResponse.jsonBody['message'] != null) {
+                      return Text(gridViewMyOrderedProductsResponse.jsonBody['message']);
+                    }
                     return Builder(
                       builder: (context) {
                         final products = getJsonField(

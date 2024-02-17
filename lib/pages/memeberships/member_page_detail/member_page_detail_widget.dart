@@ -70,6 +70,7 @@ class _MemberPageDetailWidgetState extends State<MemberPageDetailWidget> {
       ),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
+        print(widget.idMembresy);
         if (!snapshot.hasData) {
           return Scaffold(
             backgroundColor: FFTheme.of(context).secondaryBackground,
@@ -195,6 +196,9 @@ class _MemberPageDetailWidgetState extends State<MemberPageDetailWidget> {
                                                   .jsonBody,
                                               r'''$''',
                                             ).toList();
+                                            // if (relatedLit[0]['images'].length == 0) {
+                                            //   return Text("No hay imagenes");
+                                            // }
                                             return Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:

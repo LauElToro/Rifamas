@@ -74,8 +74,9 @@ class _MyparticipedLoteriesPageWidgetState
               ),
               Expanded(
                 child: FutureBuilder<ApiCallResponse>(
-                  future: MyOrderedProductsCall.call(
-                    userId: getJsonField(
+                  future: GetProductsCall.call(
+                    perPage: 2,
+                    author: getJsonField(
                       FFAppState().jwtuser,
                       r'''$.ID''',
                     ),
@@ -102,7 +103,8 @@ class _MyparticipedLoteriesPageWidgetState
                         final products = getJsonField(
                           gridViewMyOrderedProductsResponse.jsonBody,
                           r'''$''',
-                        ).toList();
+                        );
+                        print(products[0]);
                         return GridView.builder(
                           padding: EdgeInsets.zero,
                           gridDelegate:
@@ -116,6 +118,7 @@ class _MyparticipedLoteriesPageWidgetState
                           itemCount: products.length,
                           itemBuilder: (context, productsIndex) {
                             final productsItem = products[productsIndex];
+                            print(productsItem);
                             return ProductCardWidgetWidget(
                               key: Key(
                                   'Keysvi_${productsIndex}_of_${products.length}'),

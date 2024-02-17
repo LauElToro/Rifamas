@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <string name="app_name">Rifamas</string>
-    <string name="facebook_app_id">your_facebook_app_id_here</string>
+    <string name="facebook_app_id">419290587297377</string>
+    <string name="facebook_client_token">ffdb3c662602b28515da88ad8d725824</string>
 </resources>

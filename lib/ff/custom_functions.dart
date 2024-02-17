@@ -136,7 +136,7 @@ double pricePerTicket(
   String cant,
 ) {
   try {
-    if (price != null) {
+    if ((price != 0 && price != null) && (cant != null && cant != '')) {
       return price / int.parse(cant);
     } else {
       return 0;

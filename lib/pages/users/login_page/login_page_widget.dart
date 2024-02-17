@@ -268,6 +268,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                       setState(() {
                                         FFAppState().loggedIn = true;
                                       });
+
                                       _model.balance =
                                           await WalletGroup.getBalanceCall.call(
                                         idUser: getJsonField(
@@ -285,14 +286,11 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
 
                                       context.pushNamed('HomePage');
                                     } else {
-                                      setState(() {
-                                        FFAppState().loggedIn = true;
-                                      });
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
                                           content: Text(
-                                            'Error de usuario o contrasena',
+                                            'Error de usuario o contraseña',
                                             style: TextStyle(
                                               color: FFTheme.of(context)
                                                   .primaryText,
@@ -384,9 +382,52 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                 children: [
                                   GestureDetector(
                                     onTap: () async {
-                                      print("click");
                                       final loggin =
                                           await _model.signInWithGoogle();
+                                          
+                                      print(loggin);
+                                      if (loggin != false) {
+                                        setState(() {
+                                          FFAppState().jwtuser = loggin;
+                                        });
+                                        setState(() {
+                                          FFAppState().loggedIn = true;
+                                        });
+
+                                        _model.balance =
+                                            await WalletGroup.getBalanceCall.call(
+                                          idUser: getJsonField(
+                                            FFAppState().jwtuser,
+                                            r'''$.ID''',
+                                          ).toString(),
+                                        );
+                                        setState(() {
+                                          FFAppState().currentBalance =
+                                              getJsonField(
+                                            (_model.balance?.jsonBody ?? ''),
+                                            r'''$''',
+                                          ).toString();
+                                        });
+
+                                        context.pushNamed('HomePage');
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'Error de usuario o contraseña',
+                                              style: TextStyle(
+                                                color: FFTheme.of(context)
+                                                    .primaryText,
+                                              ),
+                                            ),
+                                            duration:
+                                                Duration(milliseconds: 4000),
+                                            backgroundColor:
+                                                FFTheme.of(context).error,
+                                            ),
+                                          );
+                                      }
                                     },
                                     child: Image.asset(
                                       'assets/redes/google.png', // Reemplaza esto con la ruta correcta de tu imagen

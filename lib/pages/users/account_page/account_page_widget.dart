@@ -102,7 +102,10 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                   child: Align(
                                     alignment: AlignmentDirectional(0.00, 0.00),
                                     child: Text(
-                                      'P',
+                                      getJsonField(
+                                        FFAppState().jwtuser,
+                                        r'''$.username''',
+                                      ).toString()[0],
                                       style: FFTheme.of(context)
                                           .bodyMedium
                                           .override(

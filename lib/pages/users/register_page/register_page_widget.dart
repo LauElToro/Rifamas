@@ -70,7 +70,7 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
         backgroundColor: FFTheme.of(context).secondaryBackground,
         body: SafeArea(
           top: true,
-          child: Align(
+          child: SingleChildScrollView(child: Align(
             alignment: AlignmentDirectional(0.00, 0.00),
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -479,6 +479,7 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                                           lastName: _model.lastName,
                                           password: _model.password,
                                         );
+                                        print(_model.apiResultsm0!.jsonBody);
                                         if ((_model.apiResultsm0?.succeeded ??
                                             true)) {
                                           _model.apiResultxpt =
@@ -632,6 +633,7 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
           ),
         ),
       ),
+      )
     );
   }
 }

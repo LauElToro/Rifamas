@@ -97,6 +97,7 @@ class _MyLotteriesListPageWidgetState extends State<MyLotteriesListPageWidget> {
                       );
                     }
                     final gridViewGetProductsResponse = snapshot.data!;
+                    print(gridViewGetProductsResponse);
                     return Builder(
                       builder: (context) {
                         final products = getJsonField(

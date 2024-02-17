@@ -1,3 +1,7 @@
+import 'dart:developer';
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
+
 import '/backend/api_requests/api_calls.dart';
 import '/ff/ff_theme.dart';
 import '/ff/ff_util.dart';
@@ -71,8 +75,9 @@ class LoginPageModel extends FFModel<LoginPageWidget> {
     passwordController?.dispose();
   }
 
-  Future<bool> signInWithGoogle() async {
+  Future<dynamic> signInWithGoogle() async {
     try {
+
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
       if (googleUser == null) {
@@ -81,6 +86,7 @@ class LoginPageModel extends FFModel<LoginPageWidget> {
 
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
+
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
@@ -88,7 +94,45 @@ class LoginPageModel extends FFModel<LoginPageWidget> {
 
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(credential);
-      return true;
+
+      String total = userCredential.user!.email.toString() + userCredential.user!.uid;
+      final secretPassword = sha256.convert(utf8.encode(total)).toString();
+
+
+      print(secretPassword);
+      print("Primer inicio de sesion");
+      ApiCallResponse loginResponse = await LoginCall.call(
+        username: userCredential.user!.email, // "demo_test@rifamas.es",
+        password: secretPassword // "EWFQYV57Qknx" 
+      );
+
+      if (loginResponse.statusCode == 200) {
+        print(loginResponse.jsonBody);
+        return loginResponse.jsonBody;
+      }
+
+      String regex = r'[^\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}\s]+';
+
+      print("Registrando usuario...");
+      ApiCallResponse registerResponse = await RegisterCall.call(
+        username: "Google " + userCredential.user!.displayName!.replaceAll(RegExp(regex, unicode: true), ''),
+        email: userCredential.user!.email,
+        firstName: userCredential.user!.displayName!.split(' ')[0],
+        lastName: userCredential.user!.displayName!.split(' ').length < 2 ? " " : userCredential.user!.displayName!.split(' ')[1],
+        password: secretPassword,
+      );
+
+      if (registerResponse.statusCode == 201) {
+        print("Segundo inicio de sesion");
+        ApiCallResponse logintoResponse = await LoginCall.call(
+          username: userCredential.user!.email, // "demo_test@rifamas.es",
+          password: secretPassword // "EWFQYV57Qknx" 
+        );
+
+        return logintoResponse.jsonBody;
+      }
+
+      return false;
       // Resto del código de manejo de sesión
     } catch (e) {
       print(e.toString());
@@ -100,10 +144,12 @@ class LoginPageModel extends FFModel<LoginPageWidget> {
     try {
       final LoginResult loginResult = await FacebookAuth.instance.login();
 
-      print("Facebook Login Result: ${loginResult.status}");
+      print("Facebook Login Result ${loginResult.status}");
 
       if (loginResult.status == LoginStatus.success) {
+
         final AccessToken accessToken = loginResult.accessToken!;
+
         final AuthCredential credential =
             FacebookAuthProvider.credential(accessToken.token);
 

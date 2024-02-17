@@ -115,20 +115,31 @@ class _MyProductsInSellListPageWidgetState
                           itemCount: products.length,
                           itemBuilder: (context, productsIndex) {
                             final productsItem = products[productsIndex];
-                            return SimpleProductCardWidgetWidget(
-                              key: Key(
-                                  'Keyneq_${productsIndex}_of_${products.length}'),
-                              title: getJsonField(
-                                productsItem,
-                                r'''$.name''',
-                              ).toString(),
-                              price: getJsonField(
-                                productsItem,
-                                r'''$.price''',
-                              ).toString(),
-                              image: getJsonField(
-                                productsItem,
-                                r'''$.image''',
+                            return InkWell(
+                              onTap: () {
+                                context.pushNamed("ProductDetail",
+                                    queryParameters: {
+                                      "idProduct": serializeParam(
+                                          getJsonField(
+                                              productsItem, r'''$.id'''),
+                                          ParamType.int)
+                                    }.withoutNulls);
+                              }, 
+                              child: SimpleProductCardWidgetWidget(
+                                key: Key(
+                                    'Keyneq_${productsIndex}_of_${products.length}'),
+                                title: getJsonField(
+                                  productsItem,
+                                  r'''$.name''',
+                                ).toString(),
+                                price: getJsonField(
+                                  productsItem,
+                                  r'''$.price''',
+                                ).toString(),
+                                image: getJsonField(
+                                  productsItem,
+                                  r'''$.image''',
+                                ),
                               ),
                             );
                           },

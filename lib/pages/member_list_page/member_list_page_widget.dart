@@ -289,6 +289,75 @@ class _MemberListPageWidgetState extends State<MemberListPageWidget> {
                                   ],
                                 ),
                               ),
+                              FutureBuilder<ApiCallResponse>(
+                                future: GetSubscriptionsCall.call(
+                                    author: getJsonField(
+                                            FFAppState().jwtuser, r'''$.ID''')
+                                        .toString()),
+                                builder: (context, snapshot) {
+                                  // Customize what your widget looks like when it's loading.
+                                  if (!snapshot.hasData) {
+                                    return Center(
+                                      child: SizedBox(
+                                        width: 50.0,
+                                        height: 50.0,
+                                        child: CircularProgressIndicator(
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                            FFTheme.of(context).primary,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                  final columnGetSubscriptionsResponse =
+                                      snapshot.data!;
+                                  print(columnGetSubscriptionsResponse.jsonBody);
+                                  return Builder(
+                                    builder: (context) {
+                                      final subscriptions = getJsonField(
+                                        columnGetSubscriptionsResponse.jsonBody,
+                                        r'''$''',
+                                      ).toList().take(2).toList();
+                                      return Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children:
+                                            List.generate(subscriptions.length,
+                                                (subscriptionsIndex) {
+                                          final subscriptionsItem =
+                                              subscriptions[subscriptionsIndex];
+                                          return MembershipComponentWidgetWidget(
+                                            key: Key(
+                                                'Keydnm_${subscriptionsIndex}_of_${subscriptions.length}'),
+                                            price: getJsonField(
+                                              subscriptionsItem,
+                                              r'''$.prices''',
+                                            ).toString(),
+                                            cantSorteos: getJsonField(
+                                              subscriptionsItem,
+                                              r'''$.sorteos''',
+                                            ).toString(),
+                                            title: getJsonField(
+                                              subscriptionsItem,
+                                              r'''$.name''',
+                                            ).toString(),
+                                            image: getJsonField(
+                                              subscriptionsItem,
+                                              r'''$.image''',
+                                            ),
+                                            idMembership: getJsonField(
+                                              subscriptionsItem,
+                                              r'''$.id''',
+                                            ),
+                                          );
+                                        }),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
                             ],
                           ),
                         ),
