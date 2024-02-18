@@ -107,17 +107,14 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                     0.0, 0.0, 0.0, 0.0),
                                 iconPadding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 0.0),
-                                color: FFTheme.of(context)
-                                    .secondaryBackground,
-                                textStyle: FFTheme.of(context)
-                                    .labelMedium
-                                    .override(
-                                      fontFamily: 'Montserrat',
-                                      color:
-                                          FFTheme.of(context).primary,
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                color: FFTheme.of(context).secondaryBackground,
+                                textStyle:
+                                    FFTheme.of(context).labelMedium.override(
+                                          fontFamily: 'Montserrat',
+                                          color: FFTheme.of(context).primary,
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                 elevation: 0.0,
                                 borderSide: BorderSide(
                                   color: FFTheme.of(context).primary,
@@ -143,14 +140,13 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                 iconPadding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 0.0),
                                 color: FFTheme.of(context).primary,
-                                textStyle: FFTheme.of(context)
-                                    .labelMedium
-                                    .override(
-                                      fontFamily: 'Montserrat',
-                                      color: FFTheme.of(context).info,
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                textStyle:
+                                    FFTheme.of(context).labelMedium.override(
+                                          fontFamily: 'Montserrat',
+                                          color: FFTheme.of(context).info,
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                 elevation: 0.0,
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
@@ -182,10 +178,10 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                               },
                               child: Container(
                                 width: double.infinity,
-                                height: 100.0,
+                                height: 150.0,
                                 decoration: BoxDecoration(
-                                  color: FFTheme.of(context)
-                                      .secondaryBackground,
+                                  color:
+                                      FFTheme.of(context).secondaryBackground,
                                 ),
                                 alignment: AlignmentDirectional(0.00, 0.00),
                                 child: Padding(
@@ -200,8 +196,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                         width: 80.0,
                                         height: 80.0,
                                         decoration: BoxDecoration(
-                                          color: FFTheme.of(context)
-                                              .primary,
+                                          color: FFTheme.of(context).primary,
                                           borderRadius:
                                               BorderRadius.circular(10.0),
                                         ),
@@ -235,15 +230,12 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                             children: [
                                               Text(
                                                 'No te pierdas esta oportunidad!',
-                                                style: FFTheme.of(
-                                                        context)
+                                                style: FFTheme.of(context)
                                                     .titleMedium
                                                     .override(
                                                       fontFamily: 'Montserrat',
-                                                      color:
-                                                          FFTheme.of(
-                                                                  context)
-                                                              .primary,
+                                                      color: FFTheme.of(context)
+                                                          .primary,
                                                       fontWeight:
                                                           FontWeight.w800,
                                                     ),
@@ -254,8 +246,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                                         0.0, 4.0, 0.0, 0.0),
                                                 child: Text(
                                                   'Participa en el MULTI PREMIUM DELUXE ahora!!!',
-                                                  style: FFTheme.of(
-                                                          context)
+                                                  style: FFTheme.of(context)
                                                       .labelMedium
                                                       .override(
                                                         fontFamily:

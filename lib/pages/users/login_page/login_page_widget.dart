@@ -260,10 +260,11 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                       username: _model.username,
                                       password: _model.password,
                                     );
-                                    if ((_model.response?.succeeded ?? true)) {
+                                    // if ((_model.response?.succeeded ?? true)) {
+                                    if ((_model.response!.succeeded)) {
                                       setState(() {
                                         FFAppState().jwtuser =
-                                            (_model.response?.jsonBody ?? '');
+                                            (_model.response!.jsonBody);
                                       });
                                       setState(() {
                                         FFAppState().loggedIn = true;
@@ -384,7 +385,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     onTap: () async {
                                       final loggin =
                                           await _model.signInWithGoogle();
-                                          
+
                                       print(loggin);
                                       if (loggin != false) {
                                         setState(() {
@@ -394,8 +395,9 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                           FFAppState().loggedIn = true;
                                         });
 
-                                        _model.balance =
-                                            await WalletGroup.getBalanceCall.call(
+                                        _model.balance = await WalletGroup
+                                            .getBalanceCall
+                                            .call(
                                           idUser: getJsonField(
                                             FFAppState().jwtuser,
                                             r'''$.ID''',
@@ -412,7 +414,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                         context.pushNamed('HomePage');
                                       } else {
                                         ScaffoldMessenger.of(context)
-                                          .showSnackBar(
+                                            .showSnackBar(
                                           SnackBar(
                                             content: Text(
                                               'Error de usuario o contraseña',
@@ -425,8 +427,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                 Duration(milliseconds: 4000),
                                             backgroundColor:
                                                 FFTheme.of(context).error,
-                                            ),
-                                          );
+                                          ),
+                                        );
                                       }
                                     },
                                     child: Image.asset(

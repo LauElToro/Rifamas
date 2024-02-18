@@ -43,7 +43,7 @@ class _MemberListPageWidgetState extends State<MemberListPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final decodedJWT = JwtDecoder.decode(FFAppState().jwtuser['token']);
+    final decodedJWT = JwtDecoder.decode(FFAppState().jwtuser['_jwtuser']);
 
     if (isiOS) {
       SystemChrome.setSystemUIOverlayStyle(
@@ -184,8 +184,9 @@ class _MemberListPageWidgetState extends State<MemberListPageWidget> {
                                 ),
                                 FutureBuilder<ApiCallResponse>(
                                   future: GetSubscriptionsCall.call(
-                                      author: getJsonField(
-                                          decodedJWT, r'''$.id''')),
+                                    author:
+                                        getJsonField(decodedJWT, r'''$.id'''),
+                                  ),
                                   builder: (context, snapshot) {
                                     // Customize what your widget looks like when it's loading.
                                     if (!snapshot.hasData) {
@@ -294,8 +295,9 @@ class _MemberListPageWidgetState extends State<MemberListPageWidget> {
                                 ),
                                 FutureBuilder<ApiCallResponse>(
                                   future: GetSubscriptionsCall.call(
-                                      author: getJsonField(
-                                          decodedJWT, r'''$.id''')),
+                                    author:
+                                        getJsonField(decodedJWT, r'''$.id'''),
+                                  ),
                                   builder: (context, snapshot) {
                                     // Customize what your widget looks like when it's loading.
                                     if (!snapshot.hasData) {

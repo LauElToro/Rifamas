@@ -42,7 +42,6 @@ class _HistorialUserPageWidgetState extends State<HistorialUserPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // final decodeJWT = JwtDecoder.decode(token)
     if (isiOS) {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
@@ -74,8 +73,7 @@ class _HistorialUserPageWidgetState extends State<HistorialUserPageWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                   child: Container(
                     width: double.infinity,
                     height: 100.0,
@@ -83,8 +81,8 @@ class _HistorialUserPageWidgetState extends State<HistorialUserPageWidget> {
                       color: Colors.white,
                     ),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          16.0, 8.0, 16.0, 8.0),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 16.0, 8.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -110,14 +108,13 @@ class _HistorialUserPageWidgetState extends State<HistorialUserPageWidget> {
                                     FFAppState().jwtuser,
                                     r'''$.username''',
                                   ).toString()[0],
-                                  style: FFTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Montserrat',
-                                        color: FFTheme.of(context).primary,
-                                        fontSize: 48.0,
-                                        fontWeight: FontWeight.w800,
-                                      ),
+                                  style:
+                                      FFTheme.of(context).bodyMedium.override(
+                                            fontFamily: 'Montserrat',
+                                            color: FFTheme.of(context).primary,
+                                            fontSize: 48.0,
+                                            fontWeight: FontWeight.w800,
+                                          ),
                                 ),
                               ),
                             ),
@@ -133,30 +130,28 @@ class _HistorialUserPageWidgetState extends State<HistorialUserPageWidget> {
                                 Text(
                                   getJsonField(
                                     FFAppState().jwtuser,
-                                    r'''$.user_nicename''',
+                                    r'''$.username''',
                                   ).toString(),
-                                  style: FFTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        fontFamily: 'Manrope',
-                                        color: FFTheme.of(context).primary,
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w800,
-                                      ),
+                                  style:
+                                      FFTheme.of(context).labelMedium.override(
+                                            fontFamily: 'Manrope',
+                                            color: FFTheme.of(context).primary,
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.w800,
+                                          ),
                                 ),
                                 Text(
                                   getJsonField(
                                     FFAppState().jwtuser,
-                                    r'''$.user_email''',
+                                    r'''$.email''',
                                   ).toString(),
-                                  style: FFTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        fontFamily: 'Manrope',
-                                        color: Color(0xFF636F81),
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                  style:
+                                      FFTheme.of(context).labelMedium.override(
+                                            fontFamily: 'Manrope',
+                                            color: Color(0xFF636F81),
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.w600,
+                                          ),
                                 ),
                                 FFButtonWidget(
                                   onPressed: () async {
@@ -172,23 +167,20 @@ class _HistorialUserPageWidgetState extends State<HistorialUserPageWidget> {
                                     height: 40.0,
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         24.0, 0.0, 24.0, 0.0),
-                                    iconPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 0.0, 0.0),
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
                                     color: FFTheme.of(context).primary,
-                                    textStyle: FFTheme.of(context)
-                                        .titleSmall
-                                        .override(
-                                          fontFamily: 'Montserrat',
-                                          color: Colors.white,
-                                        ),
+                                    textStyle:
+                                        FFTheme.of(context).titleSmall.override(
+                                              fontFamily: 'Montserrat',
+                                              color: Colors.white,
+                                            ),
                                     elevation: 3.0,
                                     borderSide: BorderSide(
                                       color: Colors.transparent,
                                       width: 1.0,
                                     ),
-                                    borderRadius:
-                                        BorderRadius.circular(20.0),
+                                    borderRadius: BorderRadius.circular(20.0),
                                   ),
                                 ),
                               ],

@@ -100,8 +100,7 @@ class _ChatSinglePageWidgetState extends State<ChatSinglePageWidget> {
                                       buttonSize: 40.0,
                                       icon: Icon(
                                         Icons.arrow_back_sharp,
-                                        color: FFTheme.of(context)
-                                            .primary,
+                                        color: FFTheme.of(context).primary,
                                         size: 30.0,
                                       ),
                                       onPressed: () async {
@@ -115,8 +114,7 @@ class _ChatSinglePageWidgetState extends State<ChatSinglePageWidget> {
                                         .bodyMedium
                                         .override(
                                           fontFamily: 'Montserrat',
-                                          color: FFTheme.of(context)
-                                              .primary,
+                                          color: FFTheme.of(context).primary,
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.w500,
                                         ),
@@ -148,13 +146,11 @@ class _ChatSinglePageWidgetState extends State<ChatSinglePageWidget> {
                                                 widget.chat?.seller,
                                                 'N/A',
                                               ),
-                                              style: FFTheme.of(
-                                                      context)
+                                              style: FFTheme.of(context)
                                                   .bodyMedium
                                                   .override(
                                                     fontFamily: 'Montserrat',
-                                                    color: FFTheme.of(
-                                                            context)
+                                                    color: FFTheme.of(context)
                                                         .primary,
                                                     fontWeight: FontWeight.w500,
                                                   ),
@@ -232,8 +228,7 @@ class _ChatSinglePageWidgetState extends State<ChatSinglePageWidget> {
                                                     12.0, 12.0, 12.0, 12.0),
                                             child: Text(
                                               'Hola como estas?',
-                                              style: FFTheme.of(
-                                                      context)
+                                              style: FFTheme.of(context)
                                                   .bodyMedium
                                                   .override(
                                                     fontFamily: 'Montserrat',
@@ -266,8 +261,7 @@ class _ChatSinglePageWidgetState extends State<ChatSinglePageWidget> {
                                             child: CircularProgressIndicator(
                                               valueColor:
                                                   AlwaysStoppedAnimation<Color>(
-                                                FFTheme.of(context)
-                                                    .primary,
+                                                FFTheme.of(context).primary,
                                               ),
                                             ),
                                           ),
@@ -341,8 +335,8 @@ class _ChatSinglePageWidgetState extends State<ChatSinglePageWidget> {
                                                             child: Text(
                                                               columnChatMessagesRecord
                                                                   .text,
-                                                              style: FFTheme
-                                                                      .of(context)
+                                                              style: FFTheme.of(
+                                                                      context)
                                                                   .bodyMedium
                                                                   .override(
                                                                     fontFamily:
@@ -391,8 +385,8 @@ class _ChatSinglePageWidgetState extends State<ChatSinglePageWidget> {
                                                           child: Text(
                                                             columnChatMessagesRecord
                                                                 .text,
-                                                            style: FFTheme
-                                                                    .of(context)
+                                                            style: FFTheme.of(
+                                                                    context)
                                                                 .bodyMedium
                                                                 .override(
                                                                   fontFamily:
@@ -437,8 +431,7 @@ class _ChatSinglePageWidgetState extends State<ChatSinglePageWidget> {
                           width: 100.0,
                           height: 50.0,
                           decoration: BoxDecoration(
-                            color: FFTheme.of(context)
-                                .secondaryBackground,
+                            color: FFTheme.of(context).secondaryBackground,
                             borderRadius: BorderRadius.circular(30.0),
                           ),
                           child: Row(
@@ -472,15 +465,14 @@ class _ChatSinglePageWidgetState extends State<ChatSinglePageWidget> {
                                             color: Color(0xFF9D9D9D),
                                             fontSize: 16.0,
                                           ),
-                                      hintStyle: FFTheme.of(context)
-                                          .labelMedium,
+                                      hintStyle:
+                                          FFTheme.of(context).labelMedium,
                                       enabledBorder: InputBorder.none,
                                       focusedBorder: InputBorder.none,
                                       errorBorder: InputBorder.none,
                                       focusedErrorBorder: InputBorder.none,
                                     ),
-                                    style:
-                                        FFTheme.of(context).bodyMedium,
+                                    style: FFTheme.of(context).bodyMedium,
                                     validator: _model.textControllerValidator
                                         .asValidator(context),
                                   ),
@@ -499,8 +491,7 @@ class _ChatSinglePageWidgetState extends State<ChatSinglePageWidget> {
                                       buttonSize: 35.0,
                                       icon: Icon(
                                         Icons.send_sharp,
-                                        color: FFTheme.of(context)
-                                            .primaryText,
+                                        color: FFTheme.of(context).primaryText,
                                         size: 29.0,
                                       ),
                                       onPressed: () async {

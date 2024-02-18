@@ -1,3 +1,5 @@
+import 'package:jwt_decoder/jwt_decoder.dart';
+
 import '/backend/backend.dart';
 import '/components/header_component_widget.dart';
 import '/components/single_chat_component_widget.dart';
@@ -41,6 +43,7 @@ class _ChatListPageWidgetState extends State<ChatListPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final decodedJWT = JwtDecoder.decode(FFAppState().jwtuser['_jwtuser']);
     if (isiOS) {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
@@ -97,15 +100,13 @@ class _ChatListPageWidgetState extends State<ChatListPageWidget> {
                                   iconPadding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
                                   color: FFTheme.of(context).primary,
-                                  textStyle: FFTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        fontFamily: 'Montserrat',
-                                        color:
-                                            FFTheme.of(context).info,
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                  textStyle:
+                                      FFTheme.of(context).labelMedium.override(
+                                            fontFamily: 'Montserrat',
+                                            color: FFTheme.of(context).info,
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.w600,
+                                          ),
                                   elevation: 0.0,
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
@@ -136,17 +137,15 @@ class _ChatListPageWidgetState extends State<ChatListPageWidget> {
                                       0.0, 0.0, 0.0, 0.0),
                                   iconPadding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
-                                  color: FFTheme.of(context)
-                                      .secondaryBackground,
-                                  textStyle: FFTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        fontFamily: 'Montserrat',
-                                        color: FFTheme.of(context)
-                                            .primary,
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                  color:
+                                      FFTheme.of(context).secondaryBackground,
+                                  textStyle:
+                                      FFTheme.of(context).labelMedium.override(
+                                            fontFamily: 'Montserrat',
+                                            color: FFTheme.of(context).primary,
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.w600,
+                                          ),
                                   elevation: 0.0,
                                   borderSide: BorderSide(
                                     color: FFTheme.of(context).primary,
@@ -167,8 +166,8 @@ class _ChatListPageWidgetState extends State<ChatListPageWidget> {
                                   .where(
                                     'users',
                                     arrayContains: getJsonField(
-                                      FFAppState().jwtuser,
-                                      r'''$.ID''',
+                                      decodedJWT,
+                                      r'''$.id''',
                                     ),
                                   )
                                   .orderBy('created', descending: true),
@@ -176,6 +175,7 @@ class _ChatListPageWidgetState extends State<ChatListPageWidget> {
                             builder: (context, snapshot) {
                               // Customize what your widget looks like when it's loading.
                               if (!snapshot.hasData) {
+                                print("SIN MENSAJES");
                                 return Center(
                                   child: SizedBox(
                                     width: 50.0,

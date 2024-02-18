@@ -128,7 +128,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                     Text(
                                       getJsonField(
                                         FFAppState().jwtuser,
-                                        r'''$.user_nicename''',
+                                        r'''$.username''',
                                       ).toString(),
                                       style: FFTheme.of(context)
                                           .labelMedium
@@ -142,7 +142,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                     Text(
                                       getJsonField(
                                         FFAppState().jwtuser,
-                                        r'''$.user_email''',
+                                        r'''$.email''',
                                       ).toString(),
                                       style: FFTheme.of(context)
                                           .labelMedium

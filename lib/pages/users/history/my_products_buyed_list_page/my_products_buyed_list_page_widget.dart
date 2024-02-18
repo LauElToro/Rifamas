@@ -78,10 +78,12 @@ class _MyProductsBuyedListPageWidgetState
               Expanded(
                 child: FutureBuilder<ApiCallResponse>(
                   future: MyOrderedProductsCall.call(
-                    userId: int.parse(getJsonField(
-                      decodedJWT['data']['user'],
-                      r'''$.id''',
-                    )),
+                    userId: int.parse(
+                      getJsonField(
+                        decodedJWT['data']['user'],
+                        r'''$.id''',
+                      ),
+                    ),
                     type: 'simple',
                   ),
                   builder: (context, snapshot) {
@@ -100,8 +102,10 @@ class _MyProductsBuyedListPageWidgetState
                       );
                     }
                     final gridViewMyOrderedProductsResponse = snapshot.data!;
-                    if (gridViewMyOrderedProductsResponse.jsonBody['message'] != null) {
-                      return Text(gridViewMyOrderedProductsResponse.jsonBody['message']);
+                    if (gridViewMyOrderedProductsResponse.jsonBody['message'] !=
+                        null) {
+                      return Text(gridViewMyOrderedProductsResponse
+                          .jsonBody['message']);
                     }
                     return Builder(
                       builder: (context) {

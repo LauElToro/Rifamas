@@ -44,7 +44,7 @@ class _MyProductsSelledListPageWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final decodedJWT = JwtDecoder.decode(FFAppState().jwtuser['token']);
+    final decodedJWT = JwtDecoder.decode(FFAppState().jwtuser['_jwtuser']);
     if (isiOS) {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(

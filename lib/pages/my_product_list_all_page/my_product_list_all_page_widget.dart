@@ -48,8 +48,7 @@ class _MyProductListAllPageWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final decodedToken = JwtDecoder.decode(FFAppState().jwtuser['token']);
-    print(decodedToken);
+    final decodedToken = JwtDecoder.decode(FFAppState().jwtuser['_jwtuser']);
     if (isiOS) {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
@@ -184,11 +183,6 @@ class _MyProductListAllPageWidgetState
                                 ),
                                 FutureBuilder<ApiCallResponse>(
                                   future: GetProductsCall.call(
-                                    // perPage: 2,
-                                    // author: getJsonField(
-                                    //   FFAppState().jwtuser,
-                                    //   r'''$.id''',
-                                    // ),
                                     author: int.parse(
                                       getJsonField(
                                         decodedToken['data']['user'],
