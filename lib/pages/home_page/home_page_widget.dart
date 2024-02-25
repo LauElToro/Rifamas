@@ -93,7 +93,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             alignment: AlignmentDirectional(0.0, 1.0),
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(10.0, 80.0, 10.0, 60.0),
+                padding: EdgeInsetsDirectional.fromSTEB(10.0, 80.0, 10.0, 70.0),
                 child: Container(
                   width: MediaQuery.sizeOf(context).width * 1.0,
                   height: MediaQuery.sizeOf(context).height * 1.0,
@@ -532,14 +532,15 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   _model.gridViewPagingController?.refresh());
                               await _model.waitForOnePageForGridView();
                             },
+
                             //! PRODUCTS API CALL
                             child: PagedGridView<ApiPagingParams, dynamic>(
-                              pagingController: _model.setGridViewController(
+                              pagingController: (_model.setGridViewController(
                                 (nextPageMarker) => GetProductsCall.call(
                                   page: nextPageMarker.nextPageNumber + 1,
                                   type: 'lottery',
                                 ),
-                              ),
+                              )),
                               padding: EdgeInsets.zero,
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
@@ -559,33 +560,20 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 // Customize what your widget looks like when it's loading another page.
                                 newPageProgressIndicatorBuilder: (_) =>
                                     ProductsLoadingListWidgetWidget(),
+
                                 itemBuilder: (context, _, productsIndex) {
                                   final productsItem = _model
                                       .gridViewPagingController!
                                       .itemList![productsIndex];
-                                  /*
-                                  final isHidden = getJsonField(
-                                        productsItem,
-                                        r'''$.catalog_visibility''',
-                                      ).toString() ==
-                                      "hidden";
-                                      */
 
+                                  // final productsItem =
+                                  //     filteredItems[productsIndex];
                                   return InkWell(
                                     splashColor: Colors.transparent,
                                     focusColor: Colors.transparent,
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
-                                      /*
-                                      _model.productsResponseCopy =
-                                          await viewProduct.call(
-                                              productId: int.parse(getJsonField(
-                                        productsItem,
-                                        r'''$.id''',
-                                      )));
-                                      */
-
                                       context.pushNamed(
                                         'ProductDetail',
                                         queryParameters: {

@@ -55,31 +55,31 @@ class ProductCardWidgetWidget extends StatefulWidget {
 class _ProductCardWidgetWidgetState extends State<ProductCardWidgetWidget> {
   late ProductCardWidgetModel _model;
 
-  bool dateValidation(String data) {
-    try {
-      final format = DateFormat("yyyy-MM-dd HH:mm");
-      final date = format.parse(data);
-      DateTime currentTime = DateTime.now();
-      if (date.isAfter(format.parse(currentTime.toString()))) {
-        return true;
-      } else {
-        return false;
-      }
-    } on FormatException catch (e) {
-      print(e);
-      return false;
-    }
-  }
+  // bool dateValidation(String data) {
+  //   try {
+  //     final format = DateFormat("yyyy-MM-dd HH:mm");
+  //     final date = format.parse(data);
+  //     DateTime currentTime = DateTime.now();
+  //     if (date.isAfter(format.parse(currentTime.toString()))) {
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   } on FormatException catch (e) {
+  //     print(e);
+  //     return false;
+  //   }
+  // }
 
-  String banerString() {
-    if (widget.participants == int.parse(widget.maxTickets)) {
-      return "Rifa Finalizada";
-    } else if (widget.participants < int.parse(widget.maxTickets)) {
-      return "Rifa Fallida";
-    } else {
-      return "Exceso";
-    }
-  }
+  // String banerString() {
+  //   if (widget.participants == int.parse(widget.maxTickets)) {
+  //     return "Rifa Finalizada";
+  //   } else if (widget.participants < int.parse(widget.maxTickets)) {
+  //     return "Rifa Fallida";
+  //   } else {
+  //     return "Exceso";
+  //   }
+  // }
 
   @override
   void setState(VoidCallback callback) {
@@ -135,9 +135,10 @@ class _ProductCardWidgetWidgetState extends State<ProductCardWidgetWidget> {
                   borderRadius: BorderRadius.circular(8.0),
                   child: ImageFiltered(
                     imageFilter:
-                        !dateValidation(widget.status) && widget.showStatus
-                            ? ImageFilter.blur(sigmaX: 10, sigmaY: 10)
-                            : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+                        // !dateValidation(widget.status) && widget.showStatus
+                        //     ? ImageFilter.blur(sigmaX: 10, sigmaY: 10)
+                        //     : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+                        ImageFilter.blur(sigmaX: 0, sigmaY: 0),
                     child: Image.network(
                       valueOrDefault<String>(
                         widget.image,
@@ -149,18 +150,18 @@ class _ProductCardWidgetWidgetState extends State<ProductCardWidgetWidget> {
                     ),
                   ),
                 ),
-                if (widget.showStatus)
-                  !dateValidation(widget.status)
-                      ? Center(
-                          child: Text(
-                            banerString(),
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        )
-                      : Container(),
+                // if (widget.showStatus)
+                //  // !dateValidation(widget.status)
+                //       ? Center(
+                //           child: Text(
+                //             banerString(),
+                //             style: TextStyle(
+                //                 color: Colors.white,
+                //                 fontSize: 24,
+                //                 fontWeight: FontWeight.bold),
+                //           ),
+                //         )
+                //       : Container(),
               ],
             ),
           ),

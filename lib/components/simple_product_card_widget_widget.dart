@@ -111,7 +111,7 @@ class _SimpleProductCardWidgetWidgetState
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '€ ${widget.price}',
+                widget.price != "" ? '€ ${widget.price}' : 'Sin Precio',
                 style: FFTheme.of(context).bodyMedium.override(
                       fontFamily: 'Montserrat',
                       fontSize: 18.0,

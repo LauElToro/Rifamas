@@ -1,3 +1,5 @@
+import 'package:jwt_decoder/jwt_decoder.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
@@ -116,6 +118,8 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget>
 
   @override
   Widget build(BuildContext context) {
+    print(FFAppState().jwtuser);
+    final decodedJWT = JwtDecoder.decode(FFAppState().jwtuser['_jwtuser']);
     if (isiOS) {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
@@ -319,27 +323,34 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget>
                                           0.0, 5.0, 0.0, 0.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
                                         children: [
+                                          getJsonField(
+                                                      productDetailGetSingleProductResponse
+                                                          .jsonBody,
+                                                      r'''$.stock_quantity''') !=
+                                                  null
+                                              ? Text(
+                                                  'Papeletas vendidas',
+                                                  style: FFTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Montserrat',
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                )
+                                              : SizedBox(height: 5),
                                           Text(
-                                            'Papeletas vendidas',
-                                            style: FFTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Montserrat',
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                          ),
-                                          Text(
-                                            '${getJsonField(
-                                              productDetailGetSingleProductResponse
-                                                  .jsonBody,
-                                              r'''$.participants''',
-                                            ).toString()} de ${functions.maxParticipants(getJsonField(
-                                              productDetailGetSingleProductResponse
-                                                  .jsonBody,
-                                              r'''$.meta_data''',
-                                              true,
-                                            )!)}',
+                                            getJsonField(
+                                                        productDetailGetSingleProductResponse
+                                                            .jsonBody,
+                                                        r'''$.stock_quantity''') !=
+                                                    null
+                                                ? '${getJsonField(productDetailGetSingleProductResponse.jsonBody, r'''$.total_sales''')} de ${getJsonField(productDetailGetSingleProductResponse.jsonBody, r'''$.stock_quantity''')}'
+                                                : 'Fuera de Stock',
                                             style: FFTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -1008,80 +1019,94 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget>
                                       child: FutureBuilder<ApiCallResponse>(
                                         future: TicketsComprados.call(
                                             user_id: getJsonField(
-                                              FFAppState().jwtuser,
-                                              r'''$.ID''',
-                                            ).toString(),
+                                                    // FFAppState().jwtuser,
+                                                    decodedJWT['data']['user'],
+                                                    // r'''$.ID''',
+                                                    r'''$.id''')
+                                                .toString(),
                                             product_id:
                                                 widget.idProduct.toString()),
                                         builder: (context, snapshot) {
                                           if (snapshot.hasData) {
                                             final ticketsAlt = snapshot.data!;
-                                            var tickets = getJsonField(
+                                            final tickets = getJsonField(
                                               ticketsAlt.jsonBody,
                                               r'''$''',
                                             );
+                                            print(tickets);
                                             if (getJsonField(
                                                   ticketsAlt.jsonBody,
                                                   r'''$.status''',
                                                 ) ==
                                                 "success") {
-                                              tickets = [];
+                                              // tickets = [];
                                             }
                                             /*
                                           final tickets = FFAppState()
                                               .ticketsSelected
                                               .toList();
                                               */
-                                            return GridView.builder(
-                                              padding: EdgeInsets.zero,
-                                              gridDelegate:
-                                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 7,
-                                                crossAxisSpacing: 10.0,
-                                                mainAxisSpacing: 10.0,
-                                                childAspectRatio: 1.0,
-                                              ),
-                                              scrollDirection: Axis.vertical,
-                                              itemCount: tickets.length,
-                                              itemBuilder:
-                                                  (context, ticketsIndex) {
-                                                final ticketsItem =
-                                                    tickets[ticketsIndex];
-                                                return Container(
-                                                  width: 120.0,
-                                                  height: 50.0,
-                                                  decoration: BoxDecoration(
-                                                    color: FFTheme.of(context)
-                                                        .secondaryBackground,
-                                                    image: DecorationImage(
-                                                      fit: BoxFit.fitWidth,
-                                                      image: Image.asset(
-                                                        'assets/images/LOGO-RIFAMAS-papeleta-small.webp',
-                                                      ).image,
+                                            return tickets != null
+                                                ? GridView.builder(
+                                                    padding: EdgeInsets.zero,
+                                                    gridDelegate:
+                                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                                      crossAxisCount: 7,
+                                                      crossAxisSpacing: 10.0,
+                                                      mainAxisSpacing: 10.0,
+                                                      childAspectRatio: 1.0,
                                                     ),
-                                                  ),
-                                                  child: Align(
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            0.00, 0.00),
-                                                    child: Text(
-                                                      ticketsItem.toString(),
-                                                      style: FFTheme.of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Montserrat',
-                                                            color: FFTheme.of(
-                                                                    context)
-                                                                .secondaryBackground,
-                                                            fontWeight:
-                                                                FontWeight.bold,
+                                                    scrollDirection:
+                                                        Axis.vertical,
+                                                    itemCount: tickets.length,
+                                                    itemBuilder: (context,
+                                                        ticketsIndex) {
+                                                      final ticketsItem =
+                                                          tickets[ticketsIndex];
+                                                      return Container(
+                                                        width: 120.0,
+                                                        height: 50.0,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: FFTheme.of(
+                                                                  context)
+                                                              .secondaryBackground,
+                                                          image:
+                                                              DecorationImage(
+                                                            fit:
+                                                                BoxFit.fitWidth,
+                                                            image: Image.asset(
+                                                              'assets/images/LOGO-RIFAMAS-papeleta-small.webp',
+                                                            ).image,
                                                           ),
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            );
+                                                        ),
+                                                        child: Align(
+                                                          alignment:
+                                                              AlignmentDirectional(
+                                                                  0.00, 0.00),
+                                                          child: Text(
+                                                            ticketsItem
+                                                                .toString(),
+                                                            style: FFTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Montserrat',
+                                                                  color: FFTheme.of(
+                                                                          context)
+                                                                      .secondaryBackground,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  )
+                                                : Text(
+                                                    "No Hay Papeletas Compradas");
                                           } else {
                                             return CircularProgressIndicator();
                                           }

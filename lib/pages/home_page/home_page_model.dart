@@ -111,7 +111,23 @@ class HomePageModel extends FFModel<HomePageWidget> {
   }
 
   void gridViewGetProductsPage(ApiPagingParams nextPageMarker) =>
-      gridViewApiCall!(nextPageMarker).then((gridViewGetProductsResponse) {
+      gridViewApiCall!(nextPageMarker)?.then((gridViewGetProductsResponse) {
+        bool dateValidation(String data) {
+          try {
+            final format = DateFormat("yyyy-MM-dd HH:mm");
+            final date = format.parse(data);
+            DateTime currentTime = DateTime.now();
+            if (date.isAfter(format.parse(currentTime.toString()))) {
+              return true;
+            } else {
+              return false;
+            }
+          } on FormatException catch (e) {
+            print(e);
+            return false;
+          }
+        }
+
         List<dynamic> pageItems = (getJsonField(
                   gridViewGetProductsResponse.jsonBody,
                   r'''$''',
@@ -122,10 +138,12 @@ class HomePageModel extends FFModel<HomePageWidget> {
         final adders = [];
         for (var i = 0; i < pageItems.length; i++) {
           if (getJsonField(
-                pageItems[i],
-                r'''$.catalog_visibility''',
-              ).toString() !=
-              "hidden") {
+                    pageItems[i],
+                    r'''$.catalog_visibility''',
+                  ).toString() !=
+                  "hidden" &&
+              dateValidation(functions.loteryDatesTo(
+                  getJsonField(pageItems[i], r'''$.meta_data''')))) {
             adders.add(pageItems[i]);
           }
         }
