@@ -383,10 +383,23 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                 children: [
                                   GestureDetector(
                                     onTap: () async {
+                                      showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            content: Container(
+                                              height: 60,
+                                              width: 50,
+                                              child: Center(
+                                                  child:
+                                                      CircularProgressIndicator()),
+                                            ),
+                                          );
+                                        },
+                                      );
                                       final loggin =
                                           await _model.signInWithGoogle();
-
-                                      print(loggin);
                                       if (loggin != false) {
                                         setState(() {
                                           FFAppState().jwtuser = loggin;
@@ -410,9 +423,14 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                             r'''$''',
                                           ).toString();
                                         });
-
+                                        Navigator.pop(context);
+                                        await Future.delayed(
+                                            const Duration(milliseconds: 100));
                                         context.pushNamed('HomePage');
                                       } else {
+                                        Navigator.pop(context);
+                                        await Future.delayed(
+                                            const Duration(milliseconds: 100));
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
@@ -441,7 +459,69 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                   ),
                                   GestureDetector(
                                     onTap: () async {
-                                      await _model.signInWithFacebook();
+                                      showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            content: Container(
+                                              height: 60,
+                                              width: 50,
+                                              child: Center(
+                                                  child:
+                                                      CircularProgressIndicator()),
+                                            ),
+                                          );
+                                        },
+                                      );
+
+                                      final loggin =
+                                          await _model.signInWithFacebook();
+                                      if (loggin != false) {
+                                        setState(() {
+                                          FFAppState().jwtuser = loggin;
+                                        });
+                                        setState(() {
+                                          FFAppState().loggedIn = true;
+                                        });
+
+                                        _model.balance = await WalletGroup
+                                            .getBalanceCall
+                                            .call(
+                                          idUser: getJsonField(
+                                            FFAppState().jwtuser,
+                                            r'''$.ID''',
+                                          ).toString(),
+                                        );
+                                        setState(() {
+                                          FFAppState().currentBalance =
+                                              getJsonField(
+                                            (_model.balance?.jsonBody ?? ''),
+                                            r'''$''',
+                                          ).toString();
+                                        });
+                                        Navigator.pop(context);
+                                        context.pushNamed('HomePage');
+                                      } else {
+                                        Navigator.pop(context);
+
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'Error de usuario o contraseña',
+                                              style: TextStyle(
+                                                color: FFTheme.of(context)
+                                                    .primaryText,
+                                              ),
+                                            ),
+                                            duration:
+                                                Duration(milliseconds: 4000),
+                                            backgroundColor:
+                                                FFTheme.of(context).error,
+                                          ),
+                                        );
+                                      }
                                     },
                                     child: Image.asset(
                                       'assets/redes/facebook.png', // Reemplaza esto con la ruta correcta de tu imagen
