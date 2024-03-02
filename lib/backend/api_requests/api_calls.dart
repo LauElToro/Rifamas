@@ -284,7 +284,8 @@ class RegisterCall {
       apiUrl: 'https://staging.rifamas.es/wp-json/wc/v3/customers/',
       callType: ApiCallType.POST,
       headers: {
-        'Authorization': 'Basic Y2tfYWEzMzZiMjkxZDdmMjhiNTdjODMwYWU1NDcyYTA2ZDRkOGU2YTFlZTpjc183MjhjYjM5Y2MzMmM0ZDVkMjZjMDE5NzdiODRjYmE1ODBiY2EzNmM5'
+        'Authorization':
+            'Basic Y2tfYWEzMzZiMjkxZDdmMjhiNTdjODMwYWU1NDcyYTA2ZDRkOGU2YTFlZTpjc183MjhjYjM5Y2MzMmM0ZDVkMjZjMDE5NzdiODRjYmE1ODBiY2EzNmM5'
       },
       params: {
         'username': username,

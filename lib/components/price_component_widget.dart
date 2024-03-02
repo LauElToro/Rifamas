@@ -52,6 +52,7 @@ class _PriceComponentWidgetState extends State<PriceComponentWidget> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.type);
     context.watch<FFAppState>();
 
     return Container(
@@ -83,11 +84,14 @@ class _PriceComponentWidgetState extends State<PriceComponentWidget> {
                   ),
                 ),
                 Text(
-                  '${double.parse(widget.price.replaceAll(",", ".")).toStringAsFixed(2).toString().replaceAll(".", ",")}€ ',
+                  // '${double.parse(widget.price.replaceAll(",", ".")).toStringAsFixed(2).toString().replaceAll(".", ",")}€ ',
+                  //TODO: ARREGLAR PRECION CUANDO VENGA EN EL BACKEND
+                  "SIN PRECIO",
                   style: FFTheme.of(context).bodyMedium.override(
                         fontFamily: 'Montserrat',
                         fontSize: 24.0,
                         fontWeight: FontWeight.bold,
+                        color: Colors.black,
                       ),
                 ),
               ],

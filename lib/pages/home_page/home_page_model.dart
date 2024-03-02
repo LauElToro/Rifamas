@@ -112,40 +112,30 @@ class HomePageModel extends FFModel<HomePageWidget> {
 
   void gridViewGetProductsPage(ApiPagingParams nextPageMarker) =>
       gridViewApiCall!(nextPageMarker)?.then((gridViewGetProductsResponse) {
-        bool dateValidation(String data) {
-          try {
-            final format = DateFormat("yyyy-MM-dd HH:mm");
-            final date = format.parse(data);
-            DateTime currentTime = DateTime.now();
-            if (date.isAfter(format.parse(currentTime.toString()))) {
-              return true;
-            } else {
-              return false;
-            }
-          } on FormatException catch (e) {
-            print(e);
-            return false;
-          }
-        }
-
         List<dynamic> pageItems = (getJsonField(
                   gridViewGetProductsResponse.jsonBody,
                   r'''$''',
                 ) ??
                 [])
             .toList() as List;
+
+        // print(pageItems[0]);
         //removing hidden
         final adders = [];
         for (var i = 0; i < pageItems.length; i++) {
-          if (getJsonField(
-                    pageItems[i],
-                    r'''$.catalog_visibility''',
-                  ).toString() !=
-                  "hidden" &&
-              dateValidation(functions.loteryDatesTo(
-                  getJsonField(pageItems[i], r'''$.meta_data''')))) {
+          print(pageItems[i].toString());
+          // if (getJsonField(
+          //       pageItems[i],
+          //       r'''$.catalog_visibility''',
+          //     ).toString() !=
+          //     "hidden") {
+          //   adders.add(pageItems[i]);
+          //   // &&dateValidation(functions.loteryDatesTo(getJsonField(pageItems[i], r'''$.meta_data''')))
+          // }
+          if (getJsonField(pageItems[i], r'''$.id''') != null) {
             adders.add(pageItems[i]);
           }
+          // adders.add(pageItems[i]);
         }
         pageItems = adders;
         final newNumItems = nextPageMarker.numItems + pageItems.length;

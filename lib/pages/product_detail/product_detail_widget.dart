@@ -154,6 +154,9 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget>
           );
         }
         final productDetailGetSingleProductResponse = snapshot.data!;
+        print(productDetailGetSingleProductResponse.jsonBody);
+        // print(getJsonField(
+        //     productDetailGetSingleProductResponse.jsonBody, r'''$.type'''));
         return GestureDetector(
           onTap: () => _model.unfocusNode.canRequestFocus
               ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -259,12 +262,16 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget>
                                         .jsonBody,
                                     r'''$.regular_price''',
                                   ).toString(),
-                                  type: functions.productType(getJsonField(
-                                    productDetailGetSingleProductResponse
-                                        .jsonBody,
-                                    r'''$.meta_data''',
-                                    true,
-                                  )!),
+                                  // type: functions.productType(getJsonField(
+                                  //   productDetailGetSingleProductResponse
+                                  //       .jsonBody,
+                                  //   r'''$.meta_data''',
+                                  //   true,
+                                  // )!),
+                                  type: getJsonField(
+                                      productDetailGetSingleProductResponse
+                                          .jsonBody,
+                                      r'''$.type'''),
                                 ),
                               ),
                             ),
@@ -320,16 +327,16 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget>
                                     alignment: AlignmentDirectional(0.00, 1.00),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 5.0, 0.0, 0.0),
+                                          0.0, 4.0, 0.0, 0.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                                            MainAxisAlignment.center,
                                         children: [
                                           getJsonField(
                                                       productDetailGetSingleProductResponse
                                                           .jsonBody,
-                                                      r'''$.stock_quantity''') !=
+                                                      r'''$.total_products''') !=
                                                   null
                                               ? Text(
                                                   'Papeletas vendidas',
@@ -347,9 +354,9 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget>
                                             getJsonField(
                                                         productDetailGetSingleProductResponse
                                                             .jsonBody,
-                                                        r'''$.stock_quantity''') !=
+                                                        r'''$.total_products''') !=
                                                     null
-                                                ? '${getJsonField(productDetailGetSingleProductResponse.jsonBody, r'''$.total_sales''')} de ${getJsonField(productDetailGetSingleProductResponse.jsonBody, r'''$.stock_quantity''')}'
+                                                ? '${getJsonField(productDetailGetSingleProductResponse.jsonBody, r'''$.participants  ''')} de ${getJsonField(productDetailGetSingleProductResponse.jsonBody, r'''$.total_products''')}'
                                                 : 'Fuera de Stock',
                                             style: FFTheme.of(context)
                                                 .bodyMedium
@@ -413,15 +420,20 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget>
                                                 ),
                                           ),
                                           Text(
-                                            valueOrDefault<String>(
-                                              functions.rifaType(getJsonField(
+                                            // valueOrDefault<String>(
+                                            //   functions.rifaType(getJsonField(
+                                            //     productDetailGetSingleProductResponse
+                                            //         .jsonBody,
+                                            //     r'''$.meta_data''',
+                                            //     true,
+                                            //   )!),
+                                            //   '[]',
+                                            // ),
+                                            getJsonField(
                                                 productDetailGetSingleProductResponse
                                                     .jsonBody,
-                                                r'''$.meta_data''',
-                                                true,
-                                              )!),
-                                              '[]',
-                                            ),
+                                                r'''$.type'''),
+                                            // "AQUI FUE EL CAMBIO",
                                             textAlign: TextAlign.center,
                                             style: FFTheme.of(context)
                                                 .bodyMedium
@@ -466,16 +478,21 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget>
                                                 ),
                                           ),
                                           Text(
-                                            valueOrDefault<String>(
-                                              functions.findProductState(
-                                                  getJsonField(
+                                            // valueOrDefault<String>(
+                                            //   functions.findProductState(
+                                            //       getJsonField(
+                                            //     productDetailGetSingleProductResponse
+                                            //         .jsonBody,
+                                            //     r'''$.meta_data''',
+                                            //     true,
+                                            //   )),
+                                            //   'N/A',
+                                            // ),
+                                            // "AQUI FUE EL CAMBIO 2",
+                                            getJsonField(
                                                 productDetailGetSingleProductResponse
                                                     .jsonBody,
-                                                r'''$.meta_data''',
-                                                true,
-                                              )!),
-                                              'N/A',
-                                            ),
+                                                r'''$.status'''),
                                             textAlign: TextAlign.center,
                                             style: FFTheme.of(context)
                                                 .bodyMedium
@@ -768,12 +785,13 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget>
                                                 ),
                                           ),
                                           Text(
-                                            '${functions.totalViews(getJsonField(
-                                              productDetailGetSingleProductResponse
-                                                  .jsonBody,
-                                              r'''$.meta_data''',
-                                              true,
-                                            )!)}  veces',
+                                            // '${functions.totalViews(getJsonField(
+                                            //   productDetailGetSingleProductResponse
+                                            //       .jsonBody,
+                                            //   r'''$.meta_data''',
+                                            //   true,
+                                            // ))}  veces',
+                                            "0 veces",
                                             textAlign: TextAlign.center,
                                             style: FFTheme.of(context)
                                                 .bodyMedium
@@ -782,6 +800,7 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget>
                                                   fontSize: 18.0,
                                                   fontWeight: FontWeight.w600,
                                                 ),
+                                            // "AQUI FUE EL CAMBIO 3"
                                           ),
                                         ].divide(SizedBox(height: 10.0)),
                                       ),
@@ -968,13 +987,18 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget>
                                         thickness: 1.0,
                                         color: FFTheme.of(context).primaryText,
                                       ),
-                                      Html(
-                                        data: getJsonField(
-                                          productDetailGetSingleProductResponse
-                                              .jsonBody,
-                                          r'''$.description''',
-                                        ).toString(),
-                                      ),
+                                      // Html(
+                                      //   data: getJsonField(
+                                      //     productDetailGetSingleProductResponse
+                                      //         .jsonBody,
+                                      //     r'''$.description''',
+                                      //   ).toString(),
+                                      // ),
+                                      Text(getJsonField(
+                                              productDetailGetSingleProductResponse
+                                                  .jsonBody,
+                                              r'''$.description''') ??
+                                          "SIN DESCRIPCION")
                                     ],
                                   ),
                                 ),
@@ -1011,7 +1035,7 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget>
                                     Container(
                                       width: MediaQuery.sizeOf(context).width *
                                           1.0,
-                                      height: 200.0,
+                                      height: 100.0,
                                       decoration: BoxDecoration(
                                         color: FFTheme.of(context)
                                             .secondaryBackground,
@@ -1033,20 +1057,19 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget>
                                               ticketsAlt.jsonBody,
                                               r'''$''',
                                             );
-                                            print(tickets);
-                                            if (getJsonField(
-                                                  ticketsAlt.jsonBody,
-                                                  r'''$.status''',
-                                                ) ==
-                                                "success") {
-                                              // tickets = [];
-                                            }
-                                            /*
-                                          final tickets = FFAppState()
-                                              .ticketsSelected
-                                              .toList();
-                                              */
-                                            return tickets != null
+                                            // if (getJsonField(
+                                            //       ticketsAlt.jsonBody,
+                                            //       r'''$.message''',
+                                            //     ) ==
+                                            //     "success") {
+                                            // tickets = [];
+                                            // }
+
+                                            // return tickets != null
+                                            return getJsonField(
+                                                        ticketsAlt.jsonBody,
+                                                        r'''$.message''') !=
+                                                    "El usuario no ha comprado papeletas para este producto"
                                                 ? GridView.builder(
                                                     padding: EdgeInsets.zero,
                                                     gridDelegate:
@@ -1108,7 +1131,10 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget>
                                                 : Text(
                                                     "No Hay Papeletas Compradas");
                                           } else {
-                                            return CircularProgressIndicator();
+                                            return Container(
+                                                child: Center(
+                                                    child:
+                                                        CircularProgressIndicator()));
                                           }
                                         },
                                       ),
@@ -1356,11 +1382,15 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget>
                           productDetailGetSingleProductResponse.jsonBody,
                           r'''$.meta_data''',
                         ),
-                        type: functions.productType(getJsonField(
-                          productDetailGetSingleProductResponse.jsonBody,
-                          r'''$.meta_data''',
-                          true,
-                        )!),
+                        type:
+                            // functions.productType(getJsonField(
+                            //   productDetailGetSingleProductResponse.jsonBody,
+                            //   r'''$.meta_data''',
+                            //   true,
+                            // )!),
+                            getJsonField(
+                                productDetailGetSingleProductResponse.jsonBody,
+                                r'''$.type'''),
                         ticketsSelected: FFAppState().ticketsSelected.toList(),
                       ),
                     ),

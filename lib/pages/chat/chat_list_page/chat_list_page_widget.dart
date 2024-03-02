@@ -190,12 +190,14 @@ class _ChatListPageWidgetState extends State<ChatListPageWidget> {
                               }
                               List<ChatsRecord> columnChatsRecordList =
                                   snapshot.data!;
+                              print(snapshot.data.toString());
                               return SingleChildScrollView(
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: List.generate(
                                       columnChatsRecordList.length,
                                       (columnIndex) {
+                                    print(snapshot.data.toString());
                                     final columnChatsRecord =
                                         columnChatsRecordList[columnIndex];
                                     return InkWell(

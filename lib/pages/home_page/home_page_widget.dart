@@ -605,6 +605,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           productsItem,
                                           r'''$.name''',
                                         ).toString(),
+                                        // title: productsIndex.toString(),
                                         price: getJsonField(
                                                   productsItem,
                                                   r'''$.price''',
@@ -635,18 +636,26 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                               r'''$.porcent_products''',
                                             ) /
                                             100,
-                                        type:
-                                            functions.productType(getJsonField(
-                                          productsItem,
-                                          r'''$.meta_data''',
-                                          true,
-                                        )!),
-                                        status: functions.loteryDatesTo(
-                                            getJsonField(productsItem,
-                                                r'''$.meta_data''')),
-                                        maxTickets: functions.maxParticipants(
-                                            getJsonField(productsItem,
-                                                r'''$.meta_data''')),
+                                        // type:
+                                        //     functions.productType(getJsonField(
+                                        //   productsItem,
+                                        //   r'''$.meta_data''',
+                                        //   true,
+                                        // )),
+                                        type: getJsonField(
+                                            productsItem, r'''$.type'''),
+                                        // status: functions.loteryDatesTo(
+                                        //     getJsonField(productsItem,
+                                        //         r'''$.meta_data''')),
+
+                                        status: getJsonField(
+                                            productsItem, r'''$.status'''),
+                                        // maxTickets: functions.maxParticipants(
+                                        //     getJsonField(productsItem,
+                                        //         r'''$.meta_data''')),
+                                        maxTickets: getJsonField(productsItem,
+                                                r'''$.total_products''')
+                                            .toString(),
                                         regularPrice: getJsonField(
                                           productsItem,
                                           r'''$.regular_price''',
