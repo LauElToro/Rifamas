@@ -92,8 +92,7 @@ class _HistorialUserPageWidgetState extends State<HistorialUserPageWidget> {
                               width: 100.0,
                               height: 100.0,
                               decoration: BoxDecoration(
-                                // color: FFTheme.of(context).alternate,
-                                color: Colors.red,
+                                color: FFTheme.of(context).alternate,
                                 borderRadius: BorderRadius.circular(15.0),
                                 shape: BoxShape.rectangle,
                                 border: Border.all(
@@ -108,8 +107,9 @@ class _HistorialUserPageWidgetState extends State<HistorialUserPageWidget> {
                                     FFAppState().jwtuser,
                                     r'''$.username''',
                                   ).toString()[0],
-                                  style:
-                                      FFTheme.of(context).bodyMedium.override(
+                                  style: FFTheme.of(context)
+                                          .bodyMedium
+                                          .override(
                                             fontFamily: 'Montserrat',
                                             color: FFTheme.of(context).primary,
                                             fontSize: 48.0,

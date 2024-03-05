@@ -372,7 +372,7 @@ class _MemberPageDetailWidgetState extends State<MemberPageDetailWidget> {
                                             memberPageDetailGetSingleProductResponse
                                                 .jsonBody,
                                             r'''$.variation_id''',
-                                          ).toList().take(3).toList();
+                                          ).toList();
 
                                           return Row(
                                             mainAxisSize: MainAxisSize.max,
@@ -383,6 +383,7 @@ class _MemberPageDetailWidgetState extends State<MemberPageDetailWidget> {
                                                     (cuotasLitIndex) {
                                               final cuotasLitItem =
                                                   cuotasLit[cuotasLitIndex];
+                                              print(cuotasLitItem);
                                               return InkWell(
                                                 splashColor: Colors.transparent,
                                                 focusColor: Colors.transparent,
@@ -460,10 +461,9 @@ class _MemberPageDetailWidgetState extends State<MemberPageDetailWidget> {
                                                                   ),
                                                         ),
                                                         Text(
-                                                          '${getJsonField(
-                                                            cuotasLitItem,
+                                                          getJsonField(cuotasLitItem,
                                                             r'''$.display_price''',
-                                                          ).toString()} €',
+                                                          ).toString() + '€',
                                                           style:
                                                               FFTheme.of(
                                                                       context)
@@ -488,66 +488,63 @@ class _MemberPageDetailWidgetState extends State<MemberPageDetailWidget> {
                                                                             .w800,
                                                                   ),
                                                         ),
-                                                        Text(
-                                                          'Sorteos/mes: ${getJsonField(
-                                                            memberPageDetailGetSingleProductResponse
-                                                                .jsonBody,
-                                                            r'''$.meta_data[0].value''',
-                                                          ).toString()}',
-                                                          style:
-                                                              FFTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Montserrat',
-                                                                    color: _model
-                                                                                .suscription ==
-                                                                            getJsonField(
-                                                                              cuotasLitItem,
-                                                                              r'''$.variation_id''',
-                                                                            )
-                                                                        ? FFTheme.of(context)
-                                                                            .secondaryBackground
-                                                                        : FFTheme.of(context)
-                                                                            .primary,
-                                                                    fontSize:
-                                                                        10.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                  ),
-                                                        ),
-                                                        Text(
-                                                          'Papeletas:${functions.filterPapeletas(getJsonField(
-                                                                memberPageDetailGetSingleProductResponse
-                                                                    .jsonBody,
-                                                                r'''$.meta_data''',
-                                                              ), cuotasLitIndex + 1)}',
-                                                          style:
-                                                              FFTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Montserrat',
-                                                                    color: _model
-                                                                                .suscription ==
-                                                                            getJsonField(
-                                                                              cuotasLitItem,
-                                                                              r'''$.variation_id''',
-                                                                            )
-                                                                        ? FFTheme.of(context)
-                                                                            .secondaryBackground
-                                                                        : FFTheme.of(context)
-                                                                            .primary,
-                                                                    fontSize:
-                                                                        10.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                  ),
-                                                        ),
+                                                        // This not works because bad backend processing
+                                                        // Text(
+                                                        //   'Sorteos/mes: ${getJsonField(memberPageDetailGetSingleProductResponse.jsonBody,
+                                                        //     r'''$.meta_data[0].value''',
+                                                        //   )}',
+                                                        //   style:
+                                                        //       FFTheme.of(
+                                                        //               context)
+                                                        //           .bodyMedium
+                                                        //           .override(
+                                                        //             fontFamily:
+                                                        //                 'Montserrat',
+                                                        //             color: _model
+                                                        //                         .suscription ==
+                                                        //                     getJsonField(
+                                                        //                       cuotasLitItem,
+                                                        //                       r'''$.variation_id''',
+                                                        //                     )
+                                                        //                 ? FFTheme.of(context)
+                                                        //                     .secondaryBackground
+                                                        //                 : FFTheme.of(context)
+                                                        //                     .primary,
+                                                        //             fontSize:
+                                                        //                 10.0,
+                                                        //             fontWeight:
+                                                        //                 FontWeight
+                                                        //                     .bold,
+                                                        //           ),
+                                                        // ),
+                                                        // Text(
+                                                        //   'Papeletas:${functions.filterPapeletas(getJsonField(memberPageDetailGetSingleProductResponse.jsonBody,
+                                                        //         r'''$.meta_data''',
+                                                        //       ), cuotasLitIndex + 1)}',
+                                                        //   style:
+                                                        //       FFTheme.of(
+                                                        //               context)
+                                                        //           .bodyMedium
+                                                        //           .override(
+                                                        //             fontFamily:
+                                                        //                 'Montserrat',
+                                                        //             color: _model
+                                                        //                         .suscription ==
+                                                        //                     getJsonField(
+                                                        //                       cuotasLitItem,
+                                                        //                       r'''$.variation_id''',
+                                                        //                     )
+                                                        //                 ? FFTheme.of(context)
+                                                        //                     .secondaryBackground
+                                                        //                 : FFTheme.of(context)
+                                                        //                     .primary,
+                                                        //             fontSize:
+                                                        //                 10.0,
+                                                        //             fontWeight:
+                                                        //                 FontWeight
+                                                        //                     .bold,
+                                                        //           ),
+                                                        // ),
                                                       ],
                                                     ),
                                                   ),

@@ -270,6 +270,8 @@ class _ChatSinglePageWidgetState extends State<ChatSinglePageWidget> {
                                       List<ChatMessagesRecord>
                                           columnChatMessagesRecordList =
                                           snapshot.data!;
+                                      print(snapshot.data);
+                                      print(widget.chat!.product);
                                       return Column(
                                         mainAxisSize: MainAxisSize.max,
                                         children: List.generate(
@@ -495,6 +497,17 @@ class _ChatSinglePageWidgetState extends State<ChatSinglePageWidget> {
                                         size: 29.0,
                                       ),
                                       onPressed: () async {
+                                        await ChatsRecord.collection.doc().set({
+                                          ...createChatsRecordData(
+                                            lastMessage: _model.textController.text,
+                                            lastMessageTime: DateTime.now(),
+                                            product: widget.chat!.product,
+                                            user: getJsonField(
+                                              FFAppState().jwtuser,
+                                              r'''$.ID''',
+                                            )
+                                          )
+                                        });
                                         await ChatMessagesRecord.collection
                                             .doc()
                                             .set({

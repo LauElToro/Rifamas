@@ -165,12 +165,7 @@ class _ChatListPageWidgetState extends State<ChatListPageWidget> {
                               queryBuilder: (chatsRecord) => chatsRecord
                                   .where(
                                     'users',
-                                    arrayContains: getJsonField(
-                                      decodedJWT,
-                                      r'''$.id''',
-                                    ),
                                   )
-                                  .orderBy('created', descending: true),
                             ),
                             builder: (context, snapshot) {
                               // Customize what your widget looks like when it's loading.
@@ -190,7 +185,10 @@ class _ChatListPageWidgetState extends State<ChatListPageWidget> {
                               }
                               List<ChatsRecord> columnChatsRecordList =
                                   snapshot.data!;
-                              print(snapshot.data.toString());
+                              print(getJsonField(
+                                      decodedJWT['data']['user'],
+                                      r'''$.id''',
+                                    ));
                               return SingleChildScrollView(
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
