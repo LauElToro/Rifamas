@@ -705,58 +705,71 @@ class _MemberPageDetailWidgetState extends State<MemberPageDetailWidget> {
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
                                   onTap: () async {
-                                    var chatsRecordReference =
-                                        ChatsRecord.collection.doc();
-                                    await chatsRecordReference.set({
-                                      ...createChatsRecordData(
-                                        product: getJsonField(
+                                    try {
+                                      var name = getJsonField(
                                           memberPageDetailGetSingleProductResponse
                                               .jsonBody,
                                           r'''$.name''',
-                                        ).toString(),
-                                        seller: getJsonField(
-                                          memberPageDetailGetSingleProductResponse
-                                              .jsonBody,
-                                          r'''$.author.name''',
-                                        ).toString(),
-                                        image: getJsonField(
-                                          memberPageDetailGetSingleProductResponse
-                                              .jsonBody,
-                                          r'''$.images[0].src''',
+                                      ).toString();
+
+                                      var chatsRecordReference = await ChatsRecord.collection.where('product', isEqualTo: name).get();
+                                      DocumentSnapshot<Object> doc = chatsRecordReference.docs.first as DocumentSnapshot<Object>;
+                                      print(doc.reference);
+                                      _model.chatResponseMembership = ChatsRecord.fromSnapshot(doc);
+                                    } catch (e) {
+                                      print(e.toString());
+                                      var chatsRecordReference = ChatsRecord.collection.doc();
+                                      await chatsRecordReference.set({
+                                        ...createChatsRecordData(
+                                          product: getJsonField(
+                                            memberPageDetailGetSingleProductResponse
+                                                .jsonBody,
+                                            r'''$.name''',
+                                          ).toString(),
+                                          seller: getJsonField(
+                                            memberPageDetailGetSingleProductResponse
+                                                .jsonBody,
+                                            r'''$.author.name''',
+                                          ).toString(),
+                                          image: getJsonField(
+                                            memberPageDetailGetSingleProductResponse
+                                                .jsonBody,
+                                            r'''$.images[0].src''',
+                                          ),
                                         ),
-                                      ),
-                                      ...mapToFirestore(
-                                        {
-                                          'last_message_time':
-                                              FieldValue.serverTimestamp(),
-                                        },
-                                      ),
-                                    });
-                                    _model.chatResponseMembership =
-                                        ChatsRecord.getDocumentFromData({
-                                      ...createChatsRecordData(
-                                        product: getJsonField(
-                                          memberPageDetailGetSingleProductResponse
-                                              .jsonBody,
-                                          r'''$.name''',
-                                        ).toString(),
-                                        seller: getJsonField(
-                                          memberPageDetailGetSingleProductResponse
-                                              .jsonBody,
-                                          r'''$.author.name''',
-                                        ).toString(),
-                                        image: getJsonField(
-                                          memberPageDetailGetSingleProductResponse
-                                              .jsonBody,
-                                          r'''$.images[0].src''',
+                                        ...mapToFirestore(
+                                          {
+                                            'last_message_time':
+                                                FieldValue.serverTimestamp(),
+                                          },
                                         ),
-                                      ),
-                                      ...mapToFirestore(
-                                        {
-                                          'last_message_time': DateTime.now(),
-                                        },
-                                      ),
-                                    }, chatsRecordReference);
+                                      });
+                                      _model.chatResponseMembership =
+                                          ChatsRecord.getDocumentFromData({
+                                        ...createChatsRecordData(
+                                          product: getJsonField(
+                                            memberPageDetailGetSingleProductResponse
+                                                .jsonBody,
+                                            r'''$.name''',
+                                          ).toString(),
+                                          seller: getJsonField(
+                                            memberPageDetailGetSingleProductResponse
+                                                .jsonBody,
+                                            r'''$.author.name''',
+                                          ).toString(),
+                                          image: getJsonField(
+                                            memberPageDetailGetSingleProductResponse
+                                                .jsonBody,
+                                            r'''$.images[0].src''',
+                                          ),
+                                        ),
+                                        ...mapToFirestore(
+                                          {
+                                            'last_message_time': DateTime.now(),
+                                          },
+                                        ),
+                                      }, chatsRecordReference);
+                                    }
 
                                     context.pushNamed(
                                       'chatSinglePage',
