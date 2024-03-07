@@ -497,16 +497,11 @@ class _ChatSinglePageWidgetState extends State<ChatSinglePageWidget> {
                                         size: 29.0,
                                       ),
                                       onPressed: () async {
-                                        await ChatsRecord.collection.doc().set({
-                                          ...createChatsRecordData(
-                                            lastMessage: _model.textController.text,
-                                            lastMessageTime: DateTime.now(),
-                                            product: widget.chat!.product,
-                                            user: getJsonField(
-                                              FFAppState().jwtuser,
-                                              r'''$.ID''',
-                                            )
-                                          )
+                                        await ChatsRecord.collection
+                                            .doc(widget.chatReference!.id)
+                                            .update({
+                                          'last_message_time':
+                                              FieldValue.serverTimestamp()
                                         });
                                         await ChatMessagesRecord.collection
                                             .doc()

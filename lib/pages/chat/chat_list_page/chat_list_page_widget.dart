@@ -166,9 +166,14 @@ class _ChatListPageWidgetState extends State<ChatListPageWidget> {
                                   .where(
                                     'users',
                                   )
+                                  .orderBy(
+                                    'last_message_time',
+                                    descending: true,
+                                  ),
                             ),
                             builder: (context, snapshot) {
                               // Customize what your widget looks like when it's loading.
+
                               if (!snapshot.hasData) {
                                 print("SIN MENSAJES");
                                 return Center(
@@ -186,9 +191,9 @@ class _ChatListPageWidgetState extends State<ChatListPageWidget> {
                               List<ChatsRecord> columnChatsRecordList =
                                   snapshot.data!;
                               print(getJsonField(
-                                      decodedJWT['data']['user'],
-                                      r'''$.id''',
-                                    ));
+                                decodedJWT['data']['user'],
+                                r'''$.id''',
+                              ));
                               return SingleChildScrollView(
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
@@ -196,8 +201,10 @@ class _ChatListPageWidgetState extends State<ChatListPageWidget> {
                                       columnChatsRecordList.length,
                                       (columnIndex) {
                                     print(snapshot.data.toString());
+                                    // print(snapshot.data)
                                     final columnChatsRecord =
                                         columnChatsRecordList[columnIndex];
+                                    print(columnChatsRecord.reference.id);
                                     return InkWell(
                                       splashColor: Colors.transparent,
                                       focusColor: Colors.transparent,

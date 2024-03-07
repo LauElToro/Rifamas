@@ -80,7 +80,6 @@ class ChatsRecord extends FirestoreRecord {
     DocumentReference reference,
   ) =>
       ChatsRecord._(reference, mapFromFirestore(data));
-
   @override
   String toString() =>
       'ChatsRecord(reference: ${reference.path}, data: $snapshotData)';
