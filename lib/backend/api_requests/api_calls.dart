@@ -307,6 +307,27 @@ class RegisterCall {
   }
 }
 
+class ChangeAvatarCall {
+  static Future<ApiCallResponse> call({
+    String? user_id = ''
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'change avatar user', 
+      apiUrl: 'https://staging.rifamas.es/wp-json/custom_avatar/v1/user/', 
+      callType: ApiCallType.POST, 
+      params: {
+        'id': user_id,
+        
+      },
+      bodyType: BodyType.MULTIPART,
+      returnBody: true,
+      cache: false,
+      encodeBodyUtf8: false,
+      decodeUtf8: false
+    );
+  }
+}
+
 class CreateProductCall {
   static Future<ApiCallResponse> call({
     String? rifaType = '',

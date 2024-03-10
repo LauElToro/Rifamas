@@ -172,7 +172,7 @@ class _WithdrawPageWidgetState extends State<WithdrawPageWidget> {
                             curve: Curves.ease,
                           );
                           setState(() {
-                            _model.withdrawPage = 1;
+                            _model.withdrawPage = 2;
                           });
                         },
                         text: 'Retiros aprobados',

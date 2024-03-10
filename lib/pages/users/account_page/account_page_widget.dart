@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'account_page_model.dart';
 export 'account_page_model.dart';
+import '/ff/upload_data.dart';
 
 class AccountPageWidget extends StatefulWidget {
   const AccountPageWidget({Key? key}) : super(key: key);
@@ -100,7 +101,17 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                   ),
                                   child: Align(
                                     alignment: AlignmentDirectional(0.00, 0.00),
-                                    child: Text(
+                                    child: InkWell(
+                                      onTap: () async {
+                                        final selectedMedia =
+                                                  await selectMedia(
+                                                mediaSource:
+                                                    MediaSource.photoGallery,
+                                                multiImage: false,
+                                              );
+                                        
+                                      },
+                                      child: Text(
                                       getJsonField(
                                         FFAppState().jwtuser,
                                         r'''$.username''',
@@ -113,6 +124,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                             fontSize: 48.0,
                                             fontWeight: FontWeight.w800,
                                           ),
+                                      )
                                     ),
                                   ),
                                 ),
