@@ -1,3 +1,5 @@
+import 'package:flutter/rendering.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
@@ -199,12 +201,9 @@ class _MemberPageDetailWidgetState extends State<MemberPageDetailWidget> {
                                             // if (relatedLit[0]['images'].length == 0) {
                                             //   return Text("No hay imagenes");
                                             // }
-                                            return Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
+                                            return Wrap(
+                                              direction: Axis.horizontal,
+                                              runSpacing: 5.0,
                                               children: List.generate(
                                                   relatedLit.length,
                                                   (relatedLitIndex) {
@@ -225,6 +224,7 @@ class _MemberPageDetailWidgetState extends State<MemberPageDetailWidget> {
                                                             Colors.transparent,
                                                         highlightColor:
                                                             Colors.transparent,
+                                                      
                                                         onTap: () async {
                                                           setState(() {
                                                             _model.imageSelected =

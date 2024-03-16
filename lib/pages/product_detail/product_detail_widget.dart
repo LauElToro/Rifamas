@@ -154,7 +154,7 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget>
           );
         }
         final productDetailGetSingleProductResponse = snapshot.data!;
-        print(productDetailGetSingleProductResponse.jsonBody);
+        print(widget.idProduct);
         // print(getJsonField(
         //     productDetailGetSingleProductResponse.jsonBody, r'''$.type'''));
         return GestureDetector(
@@ -1057,12 +1057,13 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget>
                                               ticketsAlt.jsonBody,
                                               r'''$''',
                                             );
+                                            
                                             // if (getJsonField(
                                             //       ticketsAlt.jsonBody,
                                             //       r'''$.message''',
                                             //     ) ==
                                             //     "success") {
-                                            // tickets = [];
+                                            //     tickets = [];
                                             // }
 
                                             // return tickets != null

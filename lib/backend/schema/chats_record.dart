@@ -100,6 +100,7 @@ Map<String, dynamic> createChatsRecordData({
   String? seller,
   String? image,
   String? user,
+  bool? see,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -109,6 +110,7 @@ Map<String, dynamic> createChatsRecordData({
       'seller': seller,
       'image': image,
       'user': user,
+      'see': see
     }.withoutNulls,
   );
 

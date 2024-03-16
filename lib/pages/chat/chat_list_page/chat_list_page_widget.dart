@@ -175,7 +175,6 @@ class _ChatListPageWidgetState extends State<ChatListPageWidget> {
                               // Customize what your widget looks like when it's loading.
 
                               if (!snapshot.hasData) {
-                                print("SIN MENSAJES");
                                 return Center(
                                   child: SizedBox(
                                     width: 50.0,
@@ -194,17 +193,17 @@ class _ChatListPageWidgetState extends State<ChatListPageWidget> {
                                 decodedJWT['data']['user'],
                                 r'''$.id''',
                               ));
+                              
                               return SingleChildScrollView(
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: List.generate(
                                       columnChatsRecordList.length,
                                       (columnIndex) {
-                                    print(snapshot.data.toString());
                                     // print(snapshot.data)
                                     final columnChatsRecord =
                                         columnChatsRecordList[columnIndex];
-                                    print(columnChatsRecord.reference.id);
+
                                     return InkWell(
                                       splashColor: Colors.transparent,
                                       focusColor: Colors.transparent,

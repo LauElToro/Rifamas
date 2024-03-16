@@ -270,7 +270,7 @@ class _ChatSinglePageWidgetState extends State<ChatSinglePageWidget> {
                                       List<ChatMessagesRecord>
                                           columnChatMessagesRecordList =
                                           snapshot.data!;
-                                      print(widget.chatReference);
+
                                       return Column(
                                         mainAxisSize: MainAxisSize.max,
                                         children: List.generate(
@@ -279,6 +279,9 @@ class _ChatSinglePageWidgetState extends State<ChatSinglePageWidget> {
                                           final columnChatMessagesRecord =
                                               columnChatMessagesRecordList[
                                                   columnIndex];
+                                          final nowing = columnChatMessagesRecord.timestamp as DateTime;
+                                          final DateFormat formatter = DateFormat('dd/MM/yy H:m:s');
+                                          final String formatted = formatter.format(nowing);
                                           return Column(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
@@ -335,7 +338,7 @@ class _ChatSinglePageWidgetState extends State<ChatSinglePageWidget> {
                                                                         12.0),
                                                             child: Text(
                                                               columnChatMessagesRecord
-                                                                  .text,
+                                                                  .text + "\n" + formatted,
                                                               style: FFTheme.of(
                                                                       context)
                                                                   .bodyMedium
@@ -499,6 +502,8 @@ class _ChatSinglePageWidgetState extends State<ChatSinglePageWidget> {
                                         await ChatsRecord.collection
                                             .doc(widget.chatReference!.id)
                                             .update({
+                                              'last_message':
+                                              _model.textController.text,
                                           'last_message_time':
                                               FieldValue.serverTimestamp()
                                         });

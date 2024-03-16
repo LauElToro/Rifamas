@@ -523,6 +523,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 page: _model.productsPage,
                                 type: 'lottery',
                               );
+                              print(_model.productsResponseCopy!.jsonBody);
                               setState(() {
                                 _model.addToProductss(
                                     (_model.productsResponseCopy?.jsonBody ??
