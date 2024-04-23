@@ -309,7 +309,8 @@ class RegisterCall {
 
 class ChangeAvatarCall {
   static Future<ApiCallResponse> call({
-    String? user_id = ''
+    String? user_id = '',
+    FFUploadedFile? image,
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'change avatar user', 
@@ -317,7 +318,7 @@ class ChangeAvatarCall {
       callType: ApiCallType.POST, 
       params: {
         'id': user_id,
-        
+        'avatar': image
       },
       bodyType: BodyType.MULTIPART,
       returnBody: true,

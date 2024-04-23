@@ -15,6 +15,8 @@ class AccountPageModel extends FFModel<AccountPageWidget> {
   // Model for bottomNavigationHomeComponent component.
   late BottomNavigationHomeComponentModel bottomNavigationHomeComponentModel;
 
+  late FFUploadedFile file;
+
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {

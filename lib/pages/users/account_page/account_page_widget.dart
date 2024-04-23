@@ -1,3 +1,5 @@
+import 'package:rifamas/backend/api_requests/api_calls.dart';
+
 import '/ff/ff_theme.dart';
 import '/ff/ff_util.dart';
 import '/ff/ff_widgets.dart';
@@ -110,6 +112,11 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                                 multiImage: false,
                                               );
                                         
+                                        final datafinal = await ChangeAvatarCall.call(
+                                          user_id: '15',
+                                          image: selectedMedia!.first as FFUploadedFile
+                                        );
+                                        print(datafinal.jsonBody);
                                       },
                                       child: Text(
                                       getJsonField(

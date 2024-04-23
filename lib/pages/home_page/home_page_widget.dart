@@ -523,7 +523,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 page: _model.productsPage,
                                 type: 'lottery',
                               );
-                              print(_model.productsResponseCopy!.jsonBody);
                               setState(() {
                                 _model.addToProductss(
                                     (_model.productsResponseCopy?.jsonBody ??
@@ -613,10 +612,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                 ).toString() ==
                                                 ""
                                             ? "0.00"
-                                            : getJsonField(
+                                            : double.parse(getJsonField(
                                                 productsItem,
                                                 r'''$.price''',
-                                              ).toString(),
+                                              ).replaceAll(",", ".")).toStringAsFixed(2).toString().replaceAll(".", ","),
                                         image: valueOrDefault<String>(
                                           getJsonField(
                                             productsItem,
@@ -651,12 +650,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
                                         status: getJsonField(
                                             productsItem, r'''$.status'''),
-                                        // maxTickets: functions.maxParticipants(
-                                        //     getJsonField(productsItem,
-                                        //         r'''$.meta_data''')),
-                                        maxTickets: getJsonField(productsItem,
-                                                r'''$.total_products''')
-                                            .toString(),
+                                        maxTickets: functions.maxParticipants(
+                                            getJsonField(productsItem,
+                                                r'''$.meta_data''')),
+                                        // maxTickets: getJsonField(productsItem,
+                                        //         r'''$.total_products''')
+                                        //     .toString(),
                                         regularPrice: getJsonField(
                                           productsItem,
                                           r'''$.regular_price''',

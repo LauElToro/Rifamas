@@ -350,14 +350,8 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget>
                                                       ),
                                                 )
                                               : SizedBox(height: 5),
-                                          Text(
-                                            getJsonField(
-                                                        productDetailGetSingleProductResponse
-                                                            .jsonBody,
-                                                        r'''$.total_products''') !=
-                                                    null
-                                                ? '${getJsonField(productDetailGetSingleProductResponse.jsonBody, r'''$.participants  ''')} de ${getJsonField(productDetailGetSingleProductResponse.jsonBody, r'''$.total_products''')}'
-                                                : 'Fuera de Stock',
+                                          Text('${getJsonField(productDetailGetSingleProductResponse.jsonBody, r'''$.participants''')} de ${functions.maxParticipants(getJsonField(productDetailGetSingleProductResponse.jsonBody, r'''$.meta_data''', true))}',
+                                                // : 'Fuera de Stock',
                                             style: FFTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -785,13 +779,12 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget>
                                                 ),
                                           ),
                                           Text(
-                                            // '${functions.totalViews(getJsonField(
-                                            //   productDetailGetSingleProductResponse
-                                            //       .jsonBody,
-                                            //   r'''$.meta_data''',
-                                            //   true,
-                                            // ))}  veces',
-                                            "0 veces",
+                                            '${functions.totalViews(getJsonField(
+                                              productDetailGetSingleProductResponse
+                                                  .jsonBody,
+                                              r'''$.meta_data''',
+                                              true,
+                                            ))}  veces',
                                             textAlign: TextAlign.center,
                                             style: FFTheme.of(context)
                                                 .bodyMedium
@@ -1067,6 +1060,9 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget>
                                             // }
 
                                             // return tickets != null
+                                            print(getJsonField(
+                                                        ticketsAlt.jsonBody,
+                                                        r'''$.message'''));
                                             return getJsonField(
                                                         ticketsAlt.jsonBody,
                                                         r'''$.message''') !=

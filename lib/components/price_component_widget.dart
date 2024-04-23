@@ -84,9 +84,9 @@ class _PriceComponentWidgetState extends State<PriceComponentWidget> {
                   ),
                 ),
                 Text(
-                  // '${double.parse(widget.price.replaceAll(",", ".")).toStringAsFixed(2).toString().replaceAll(".", ",")}€ ',
+                  '${double.parse(widget.price.replaceAll(",", ".")).toStringAsFixed(2).toString().replaceAll(".", ",")}€ ',
                   //TODO: ARREGLAR PRECION CUANDO VENGA EN EL BACKEND
-                  "SIN PRECIO",
+                  //"SIN PRECIO",
                   style: FFTheme.of(context).bodyMedium.override(
                         fontFamily: 'Montserrat',
                         fontSize: 24.0,
